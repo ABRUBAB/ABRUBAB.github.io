@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-base: #0B0A0C;
+    --bg-surface: #151316;
+    --bg-surface-raised: #1C191E;
+    --bg-surface-high: #252026;
+    
+    --accent-maroon: #6E1423;
+    --accent-maroon-dark: #450B15;
+    --accent-maroon-light: #8E1C30;
+    
+    --accent-gold: #C9A227;
+    --accent-gold-light: #E5BE38;
+    --accent-gold-glow: rgba(201, 162, 39, 0.35);
+    
+    --text-primary: #EDE7DD;
+    --text-secondary: #A69C93;
+    --text-muted: #706862;
+    
+    --border-subtle: rgba(237, 231, 221, 0.08);
+    --border-maroon: rgba(110, 20, 35, 0.35);
+    --border-gold: rgba(201, 162, 39, 0.45);
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    selection-background-color: #6E1423;
+    selection-color: #EDE7DD;
+  }
+
+  ::selection {
+    background: #6E1423;
+    color: #EDE7DD;
+  }
+}
+
+/* Blur to sharp resolving transition */
+.resolve-in {
+  animation: resolveIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes resolveIn {
+  0% {
+    filter: blur(8px);
+    opacity: 0.2;
+    transform: translateY(12px) scale(0.99);
+  }
+  100% {
+    filter: blur(0px);
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Laser scan line animation */
+@keyframes laserScan {
+  0% {
+    top: 0%;
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0.2;
+  }
+}
+
+.animate-laserScan {
+  animation: laserScan 0.45s ease-in-out forwards;
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 8s linear infinite;
+}
+
+/* Subtle gold pulse for resolved nodes */
+@keyframes goldPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(201, 162, 39, 0.2);
+    border-color: rgba(201, 162, 39, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(201, 162, 39, 0.5);
+    border-color: rgba(229, 190, 56, 0.8);
+  }
+}
+
+.gold-glow {
+  animation: goldPulse 3.5s infinite ease-in-out;
+}
+
+/* Academic paper typography */
+.font-display {
+  font-family: var(--font-fraunces), serif;
+}
+
+.font-body {
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Print styling for Reviewer Mode and CV */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .resolve-in {
+    filter: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
