@@ -67,43 +67,38 @@ export function FooterSection({ onOpenContact }: { onOpenContact: () => void }) 
           {/* Column 2: Navigation Links */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="text-xs uppercase font-mono tracking-wider text-[#D4AF37] font-semibold">
-              Navigation
+              Portfolio Navigation
             </h4>
             <ul className="space-y-2 text-xs text-[#A69C93]">
               <li>
-                <a href="#about" className="hover:text-[#EDE7DD] transition-colors">
-                  About & Vision
-                </a>
+                <Link href="/" className="hover:text-[#EDE7DD] transition-colors">
+                  Home Overview
+                </Link>
               </li>
               <li>
-                <a href="#research" className="hover:text-[#EDE7DD] transition-colors">
-                  Research Pillars
-                </a>
+                <Link href="/about" className="hover:text-[#EDE7DD] transition-colors">
+                  About & Biography
+                </Link>
               </li>
               <li>
-                <a href="#publications" className="hover:text-[#EDE7DD] transition-colors">
-                  Publications (7)
-                </a>
+                <Link href="/publications" className="hover:text-[#EDE7DD] transition-colors">
+                  Publications Track (7)
+                </Link>
               </li>
               <li>
-                <a href="#projects" className="hover:text-[#EDE7DD] transition-colors">
-                  Flagship Projects
-                </a>
+                <Link href="/projects" className="hover:text-[#EDE7DD] transition-colors">
+                  Flagship Applied Projects
+                </Link>
               </li>
               <li>
-                <a href="#experience" className="hover:text-[#EDE7DD] transition-colors">
-                  Experience & GPU Platform
-                </a>
+                <Link href="/experience" className="hover:text-[#EDE7DD] transition-colors">
+                  Appointments & Infrastructure
+                </Link>
               </li>
               <li>
-                <a href="#awards" className="hover:text-[#EDE7DD] transition-colors">
-                  Honors & Awards
-                </a>
-              </li>
-              <li>
-                <a href="#vision" className="hover:text-[#EDE7DD] transition-colors">
-                  Master&apos;s / PhD in Europe
-                </a>
+                <Link href="/cv" className="hover:text-[#EDE7DD] transition-colors">
+                  Academic Curriculum Vitae
+                </Link>
               </li>
             </ul>
           </div>

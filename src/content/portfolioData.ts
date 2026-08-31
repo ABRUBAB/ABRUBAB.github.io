@@ -391,6 +391,8 @@ export const flagshipProjects: Project[] = [
   }
 ];
 
+export const projects = flagshipProjects;
+
 export const experienceRoles: ExperienceRole[] = [
   {
     id: "nbtc-ra",

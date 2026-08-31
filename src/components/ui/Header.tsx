@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { 
   FileText, 
   Mail, 
@@ -12,7 +13,11 @@ import {
   BookOpen, 
   GraduationCap,
   ArrowRight,
-  ShieldCheck
+  ShieldCheck,
+  Building2,
+  Code2,
+  User,
+  Layers
 } from "lucide-react";
 import { ContactModal } from "./ContactModal";
 
@@ -25,6 +30,7 @@ export function Header({ isReviewerMode, onToggleReviewerMode }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,6 +39,14 @@ export function Header({ isReviewerMode, onToggleReviewerMode }: HeaderProps) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const navLinks = [
+    { href: "/about", label: "About", icon: User },
+    { href: "/publications", label: "Publications", badge: "7", icon: BookOpen },
+    { href: "/projects", label: "Projects", icon: Code2 },
+    { href: "/experience", label: "Experience", icon: Building2 },
+    { href: "/cv", label: "CV", icon: FileText },
+  ];
 
   return (
     <>
@@ -73,19 +87,31 @@ export function Header({ isReviewerMode, onToggleReviewerMode }: HeaderProps) {
           {/* Desktop Navigation Links */}
           {!isReviewerMode && (
             <nav className="hidden lg:flex items-center gap-6 xl:gap-7 text-xs uppercase tracking-widest font-semibold text-[#A69C93]">
-              <a href="#about" className="hover:text-[#EDE7DD] transition-colors">About</a>
-              <a href="#research" className="hover:text-[#EDE7DD] transition-colors">Research</a>
-              <a href="#publications" className="hover:text-[#EDE7DD] transition-colors flex items-center gap-1.5">
-                <span>Publications</span>
-                <span className="px-1.5 py-0.2 rounded-full bg-[#D4AF37]/20 text-[#E5BE38] text-[10px] font-bold">7</span>
-              </a>
-              <a href="#projects" className="hover:text-[#EDE7DD] transition-colors">Projects</a>
-              <a href="#experience" className="hover:text-[#EDE7DD] transition-colors">Experience</a>
-              <a href="#awards" className="hover:text-[#EDE7DD] transition-colors">Awards</a>
-              <a href="#vision" className="hover:text-[#EDE7DD] transition-colors text-[#EDE7DD] flex items-center gap-1">
-                <span>Vision</span>
-                <GraduationCap className="w-3.5 h-3.5 text-[#D4AF37]" />
-              </a>
+              <Link 
+                href="/" 
+                className={`hover:text-[#EDE7DD] transition-colors ${pathname === "/" ? "text-[#E5BE38] font-bold" : ""}`}
+              >
+                Home
+              </Link>
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`hover:text-[#EDE7DD] transition-colors flex items-center gap-1.5 ${
+                      isActive ? "text-[#E5BE38] font-bold" : ""
+                    }`}
+                  >
+                    <span>{link.label}</span>
+                    {link.badge && (
+                      <span className="px-1.5 py-0.2 rounded-full bg-[#D4AF37]/20 text-[#E5BE38] text-[10px] font-bold">
+                        {link.badge}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
             </nav>
           )}
 
@@ -114,7 +140,7 @@ export function Header({ isReviewerMode, onToggleReviewerMode }: HeaderProps) {
               )}
             </button>
 
-            {/* Academic CV Direct Link (Hidden on very tiny mobile to make room for Menu) */}
+            {/* Academic CV Direct Link */}
             <Link
               href="/cv"
               className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#151316] hover:bg-[#1C191E] border border-white/10 text-xs font-semibold text-[#EDE7DD] transition-all hover:border-[#D4AF37]"
@@ -133,7 +159,7 @@ export function Header({ isReviewerMode, onToggleReviewerMode }: HeaderProps) {
               <span className="hidden md:inline">Contact</span>
             </button>
 
-            {/* Prominent Mobile Menu Hamburger Button (Always visible on mobile/tablet) */}
+            {/* Prominent Mobile Menu Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle Navigation Menu"
@@ -144,80 +170,52 @@ export function Header({ isReviewerMode, onToggleReviewerMode }: HeaderProps) {
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer / Dropdown Menu */}
+        {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
           <div className="lg:hidden bg-[#0B0A0C]/98 border-b border-[#D4AF37]/30 px-6 py-5 space-y-3 shadow-2xl backdrop-blur-xl animate-fadeIn mt-2">
             <div className="flex items-center justify-between pb-2 border-b border-white/10 text-xs font-mono text-[#D4AF37] uppercase tracking-wider">
-              <span>Navigation Menu</span>
-              <span>7 Sections</span>
+              <span>Navigation Pages</span>
+              <span>Portfolio Menu</span>
             </div>
 
             <div className="grid grid-cols-1 gap-1 pt-1">
-              <a
-                href="#about"
+              <Link
+                href="/"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-white/5 text-sm text-[#EDE7DD] hover:text-[#E5BE38] transition-colors"
+                className={`flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-white/5 text-sm transition-colors ${
+                  pathname === "/" ? "text-[#E5BE38] bg-white/5 font-bold" : "text-[#EDE7DD]"
+                }`}
               >
-                <span>About Me & Vision</span>
+                <span>Home</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#D4AF37]" />
-              </a>
+              </Link>
 
-              <a
-                href="#research"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-white/5 text-sm text-[#EDE7DD] hover:text-[#E5BE38] transition-colors"
-              >
-                <span>Research Pillars</span>
-                <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37]" />
-              </a>
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                const isActive = pathname === link.href;
 
-              <a
-                href="#publications"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-white/5 text-sm text-[#EDE7DD] hover:text-[#E5BE38] transition-colors"
-              >
-                <div className="flex items-center gap-2">
-                  <span>Publications Track Record</span>
-                  <span className="px-1.5 py-0.2 rounded-full bg-[#D4AF37]/20 text-[#E5BE38] text-[10px] font-bold">7</span>
-                </div>
-                <ArrowRight className="w-3.5 h-3.5 text-[#D4AF37]" />
-              </a>
-
-              <a
-                href="#projects"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-white/5 text-sm text-[#EDE7DD] hover:text-[#E5BE38] transition-colors"
-              >
-                <span>Flagship Projects</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#D4AF37]" />
-              </a>
-
-              <a
-                href="#experience"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-white/5 text-sm text-[#EDE7DD] hover:text-[#E5BE38] transition-colors"
-              >
-                <span>Experience & Systems</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#D4AF37]" />
-              </a>
-
-              <a
-                href="#awards"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-white/5 text-sm text-[#EDE7DD] hover:text-[#E5BE38] transition-colors"
-              >
-                <span>Honors & Hackathons</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#D4AF37]" />
-              </a>
-
-              <a
-                href="#vision"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2 px-3 rounded-xl bg-[#6E1423]/25 border border-[#6E1423]/60 text-sm font-semibold text-[#E5BE38]"
-              >
-                <span>Master&apos;s / PhD in Europe</span>
-                <GraduationCap className="w-4 h-4 text-[#D4AF37]" />
-              </a>
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-white/5 text-sm transition-colors ${
+                      isActive ? "text-[#E5BE38] bg-white/5 font-bold" : "text-[#EDE7DD]"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Icon className="w-4 h-4 text-[#D4AF37]" />
+                      <span>{link.label}</span>
+                      {link.badge && (
+                        <span className="px-1.5 py-0.2 rounded-full bg-[#D4AF37]/20 text-[#E5BE38] text-[10px] font-bold">
+                          {link.badge}
+                        </span>
+                      )}
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Quick Mobile Actions */}
@@ -238,7 +236,7 @@ export function Header({ isReviewerMode, onToggleReviewerMode }: HeaderProps) {
                 className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#6E1423] border border-[#8E1C30] text-xs font-semibold text-white"
               >
                 <Mail className="w-3.5 h-3.5" />
-                <span>Get in Touch</span>
+                <span>Contact</span>
               </button>
             </div>
           </div>

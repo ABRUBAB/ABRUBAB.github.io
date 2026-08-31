@@ -1,0 +1,307 @@
+{
+  "timestamp": "2026-08-31T19:58:27.723Z",
+  "consoleErrors": [],
+  "failedRequests": [],
+  "tests": [
+    {
+      "name": "Homepage Title & Network Load",
+      "status": "pass",
+      "details": {
+        "title": "Abdullah Rubab | Medical AI & Uncertainty Quantification Researcher",
+        "url": "http://localhost:3000/"
+      }
+    },
+    {
+      "name": "Desktop Zero Horizontal Overflow",
+      "status": "pass",
+      "details": {
+        "scrollWidth": 1280,
+        "innerWidth": 1280
+      }
+    },
+    {
+      "name": "Hero Avatar Initial Mode: Crisp Portrait",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Hero Avatar Switched to 3D Point Cloud Mode",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Hero Avatar Toggled Back to Crisp Portrait",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Homepage Research Thesis Card",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Homepage 3 Selected Publication Cards",
+      "status": "pass",
+      "details": {
+        "count": 3
+      }
+    },
+    {
+      "name": "Homepage 4 Compact Project Cards",
+      "status": "pass",
+      "details": {
+        "count": 4
+      }
+    },
+    {
+      "name": "Homepage 4 Experience Cards",
+      "status": "pass",
+      "details": {
+        "count": 4
+      }
+    },
+    {
+      "name": "Homepage Hackathon Champion Spotlight",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Hackathon Winner Photo Lightbox Open",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Hackathon Winner Photo Lightbox Closed",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Homepage Section Links Target Valid Routes",
+      "status": "pass",
+      "details": {
+        "aboutLinkHref": "/about/",
+        "pubLinkHref": "/publications/",
+        "projLinkHref": "/projects/",
+        "expLinkHref": "/experience/",
+        "cvLinkHref": "/cv/"
+      }
+    },
+    {
+      "name": "BibTeX Citation Modal Open on Homepage",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "BibTeX Copy to Clipboard Interaction",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Contact Modal Open",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Academic Email Copy Interaction",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Reviewer Mode Toggle ON (Dossier View)",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Reviewer Mode Toggle OFF (Restored Visual Hero)",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "/about Page Structure & Narrative Sections",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "/about Academic Dossier & CGPA 3.84",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "/about Language Proficiency Grid (English, Bengali, Hindi)",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "/publications Page Loaded with 7 Papers",
+      "status": "pass",
+      "details": {
+        "count": 7
+      }
+    },
+    {
+      "name": "Filter Tab: Published (IEEE)",
+      "status": "pass",
+      "details": {
+        "count": 1
+      }
+    },
+    {
+      "name": "Filter Tab: Accepted (BECITHCON)",
+      "status": "pass",
+      "details": {
+        "count": 2
+      }
+    },
+    {
+      "name": "Filter Tab: Under Review (Q1)",
+      "status": "pass",
+      "details": {
+        "count": 2
+      }
+    },
+    {
+      "name": "Filter Tab: In Preparation",
+      "status": "pass",
+      "details": {
+        "count": 2
+      }
+    },
+    {
+      "name": "Filter Tab: All Papers Restored",
+      "status": "pass",
+      "details": {
+        "count": 7
+      }
+    },
+    {
+      "name": "/publications Expandable Abstract & Methodology",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "/publications Cite (BibTeX) Modal Open",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "/projects Deep-Dive Case Studies",
+      "status": "pass",
+      "details": {
+        "count": 5
+      }
+    },
+    {
+      "name": "/projects Validated Benchmark Cards Present",
+      "status": "pass",
+      "details": {
+        "count": 5
+      }
+    },
+    {
+      "name": "/projects GitHub Repository Links",
+      "status": "pass",
+      "details": {
+        "count": 5
+      }
+    },
+    {
+      "name": "/experience Institutional Appointments",
+      "status": "pass",
+      "details": {
+        "count": 4
+      }
+    },
+    {
+      "name": "/experience Appointments: NBTC, HIRL, GPU Cluster, Keyoon",
+      "status": "pass",
+      "details": {
+        "nbtcVisible": true,
+        "hirlVisible": true,
+        "clusterVisible": true,
+        "keyoonVisible": true
+      }
+    },
+    {
+      "name": "/cv Academic Printable CV Layout & Content",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Mobile Zero Horizontal Overflow: Homepage",
+      "status": "pass",
+      "details": {
+        "hasOverflow": false,
+        "docWidth": 375,
+        "bodyWidth": 375,
+        "winWidth": 375
+      }
+    },
+    {
+      "name": "Mobile Zero Horizontal Overflow: About",
+      "status": "pass",
+      "details": {
+        "hasOverflow": false,
+        "docWidth": 375,
+        "bodyWidth": 375,
+        "winWidth": 375
+      }
+    },
+    {
+      "name": "Mobile Zero Horizontal Overflow: Publications",
+      "status": "pass",
+      "details": {
+        "hasOverflow": false,
+        "docWidth": 375,
+        "bodyWidth": 375,
+        "winWidth": 375
+      }
+    },
+    {
+      "name": "Mobile Zero Horizontal Overflow: Projects",
+      "status": "pass",
+      "details": {
+        "hasOverflow": false,
+        "docWidth": 375,
+        "bodyWidth": 375,
+        "winWidth": 375
+      }
+    },
+    {
+      "name": "Mobile Zero Horizontal Overflow: Experience",
+      "status": "pass",
+      "details": {
+        "hasOverflow": false,
+        "docWidth": 375,
+        "bodyWidth": 375,
+        "winWidth": 375
+      }
+    },
+    {
+      "name": "Mobile Zero Horizontal Overflow: CV",
+      "status": "pass",
+      "details": {
+        "hasOverflow": false,
+        "docWidth": 375,
+        "bodyWidth": 375,
+        "winWidth": 375
+      }
+    },
+    {
+      "name": "Mobile Navigation Menu Open & Links Rendered",
+      "status": "pass",
+      "details": {}
+    },
+    {
+      "name": "Mobile Drawer Navigation Link to /projects",
+      "status": "pass",
+      "details": {
+        "url": "http://localhost:3000/projects/"
+      }
+    },
+    {
+      "name": "Mobile Navigation Menu Close Interaction",
+      "status": "pass",
+      "details": {}
+    }
+  ]
+}
