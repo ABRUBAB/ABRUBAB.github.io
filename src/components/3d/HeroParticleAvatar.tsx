@@ -1,15 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { Sparkles, ShieldCheck, Cpu, Activity, Scan, Layers, RefreshCw } from "lucide-react";
+import { ShieldCheck, Cpu, Activity, Scan, RefreshCw } from "lucide-react";
 
 interface Particle {
   x: number;
   y: number;
   originX: number;
   originY: number;
-  originZ: number;
   vx: number;
   vy: number;
   color: string;
@@ -25,11 +24,30 @@ export function HeroParticleAvatar() {
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const isVisibleRef = useRef(true);
 
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef<{ x: number; y: number; isInside: boolean }>({ x: 0, y: 0, isInside: false });
 
-  // Sample image and generate 3D Evidential Point Mesh
+  // 1. Intersection Observer: Stop loop when off-screen to guarantee 0 scroll lag
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisibleRef.current = entry.isIntersecting;
+        });
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(card);
+    return () => observer.disconnect();
+  }, []);
+
+  // 2. High-fidelity Point Sampling
   useEffect(() => {
     const img = new window.Image();
     img.crossOrigin = "anonymous";
@@ -40,8 +58,8 @@ export function HeroParticleAvatar() {
       const sampleCtx = sampleCanvas.getContext("2d");
       if (!sampleCtx) return;
 
-      const w = 150;
-      const h = 190;
+      const w = 120;
+      const h = 155;
       sampleCanvas.width = w;
       sampleCanvas.height = h;
       sampleCtx.drawImage(img, 0, 0, w, h);
@@ -49,11 +67,9 @@ export function HeroParticleAvatar() {
       const imgData = sampleCtx.getImageData(0, 0, w, h).data;
       const pts: Particle[] = [];
 
-      const goldColors = ["#FFF2A3", "#E5BE38", "#D4AF37", "#C9A227", "#8E1C30"];
-
-      // Sample pixels with high density around face features
-      for (let y = 0; y < h; y += 2.5) {
-        for (let x = 0; x < w; x += 2.5) {
+      // Step of 3.2 generates ~1,400 sharp, high-density feature points
+      for (let y = 0; y < h; y += 3.2) {
+        for (let x = 0; x < w; x += 3.2) {
           const idx = (Math.floor(y) * w + Math.floor(x)) * 4;
           const r = imgData[idx];
           const g = imgData[idx + 1];
@@ -63,10 +79,8 @@ export function HeroParticleAvatar() {
           const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
           if (a > 30 && luminance > 0.08) {
-            // Map to canvas display coordinates (scaled to ~320x420)
             const targetX = (x / w) * 320 + 15;
             const targetY = (y / h) * 420 + 10;
-            const depthZ = (luminance - 0.5) * 40;
 
             const color =
               luminance > 0.65
@@ -78,15 +92,14 @@ export function HeroParticleAvatar() {
                 : "#4A0E18";
 
             pts.push({
-              x: targetX + (Math.random() - 0.5) * 80,
-              y: targetY + (Math.random() - 0.5) * 80,
+              x: targetX + (Math.random() - 0.5) * 40,
+              y: targetY + (Math.random() - 0.5) * 40,
               originX: targetX,
               originY: targetY,
-              originZ: depthZ,
               vx: 0,
               vy: 0,
               color: color,
-              size: luminance > 0.5 ? 2.2 : 1.6,
+              size: luminance > 0.5 ? 2.0 : 1.5,
               alpha: 0.4 + luminance * 0.6,
             });
           }
@@ -97,61 +110,87 @@ export function HeroParticleAvatar() {
     };
   }, []);
 
-  // Particle Animation Canvas Loop
+  // 3. Ultra-Optimized Particle Render Loop (Batch draw calls + Composite Glow)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     let animId: number;
-    canvas.width = 350;
-    canvas.height = 450;
+    const dpr = Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 1.5);
+    canvas.width = 350 * dpr;
+    canvas.height = 450 * dpr;
+    ctx.scale(dpr, dpr);
 
     let tick = 0;
 
     const render = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      tick += 0.03;
-
-      if (mode === "particles") {
+      if (mode === "particles" && isVisibleRef.current) {
+        ctx.clearRect(0, 0, 350, 450);
+        tick += 0.03;
         const mouse = mouseRef.current;
 
-        particlesRef.current.forEach((p) => {
-          // Breathing wave in Z space mapped to X/Y
-          const wave = Math.sin(tick + p.originY * 0.05) * 1.5;
+        // Group points by color to batch canvas calls (4 fill calls instead of 1,400)
+        const groups: Record<string, Particle[]> = {
+          "#FFF2A3": [],
+          "#D4AF37": [],
+          "#8E1C30": [],
+          "#4A0E18": [],
+        };
+
+        const pts = particlesRef.current;
+        const len = pts.length;
+
+        for (let i = 0; i < len; i++) {
+          const p = pts[i];
+          const wave = Math.sin(tick + p.originY * 0.05) * 1.2;
 
           let targetX = p.originX + wave;
           let targetY = p.originY;
 
-          // Interactive cursor repulsion
           if (mouse.isInside) {
             const dx = mouse.x - p.x;
             const dy = mouse.y - p.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 60) {
+            const distSq = dx * dx + dy * dy;
+            if (distSq < 3600) {
+              const dist = Math.sqrt(distSq);
               const force = (60 - dist) / 60;
-              targetX -= (dx / dist) * force * 35;
-              targetY -= (dy / dist) * force * 35;
+              targetX -= (dx / dist) * force * 30;
+              targetY -= (dy / dist) * force * 30;
             }
           }
 
-          // Spring physics to origin
-          p.vx = (p.vx + (targetX - p.x) * 0.12) * 0.78;
-          p.vy = (p.vy + (targetY - p.y) * 0.12) * 0.78;
+          // Physics integration
+          p.vx = (p.vx + (targetX - p.x) * 0.14) * 0.78;
+          p.vy = (p.vy + (targetY - p.y) * 0.14) * 0.78;
 
           p.x += p.vx;
           p.y += p.vy;
 
-          // Draw Glowing Particle
+          if (groups[p.color]) {
+            groups[p.color].push(p);
+          } else {
+            groups["#D4AF37"].push(p);
+          }
+        }
+
+        // Fast Batched Rendering with Additive Glow (0 lag)
+        ctx.globalCompositeOperation = "lighter";
+
+        for (const [color, group] of Object.entries(groups)) {
+          if (group.length === 0) continue;
+          ctx.fillStyle = color;
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
-          ctx.globalAlpha = p.alpha;
-          ctx.shadowBlur = p.size > 2 ? 6 : 2;
-          ctx.shadowColor = p.color;
+          for (let j = 0; j < group.length; j++) {
+            const p = group[j];
+            ctx.moveTo(p.x + p.size, p.y);
+            ctx.arc(p.x, p.y, p.size, 0, 6.2831853);
+          }
           ctx.fill();
-        });
+        }
+
+        ctx.globalCompositeOperation = "source-over";
       }
 
       animId = requestAnimationFrame(render);
@@ -169,8 +208,8 @@ export function HeroParticleAvatar() {
       setMode((prev) => (prev === "photo" ? "particles" : "photo"));
       setTimeout(() => {
         setIsScanning(false);
-      }, 400);
-    }, 250);
+      }, 350);
+    }, 200);
   };
 
   // 3D Perspective Tilt Tracking
@@ -185,8 +224,8 @@ export function HeroParticleAvatar() {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rX = ((y - centerY) / centerY) * -10;
-    const rY = ((x - centerX) / centerX) * 10;
+    const rX = ((y - centerY) / centerY) * -8;
+    const rY = ((x - centerX) / centerX) * 8;
 
     setRotateX(rX);
     setRotateY(rY);
@@ -214,7 +253,7 @@ export function HeroParticleAvatar() {
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
-        className="relative w-[280px] min-[380px]:w-[310px] sm:w-[350px] h-[375px] sm:h-[460px] rounded-3xl transition-transform duration-200 ease-out cursor-pointer group z-10"
+        className="relative w-[280px] min-[380px]:w-[310px] sm:w-[350px] h-[375px] sm:h-[460px] rounded-3xl transition-transform duration-150 ease-out cursor-pointer group z-10 will-change-transform"
         style={{
           transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
           transformStyle: "preserve-3d",
@@ -251,6 +290,7 @@ export function HeroParticleAvatar() {
               <canvas
                 ref={canvasRef}
                 className="w-full h-full"
+                style={{ width: "350px", height: "450px" }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A0C]/90 via-transparent to-transparent pointer-events-none" />
             </div>
