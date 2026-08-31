@@ -133,7 +133,7 @@ export default function AcademicCVPage() {
                 </div>
                 <div className="flex justify-between items-baseline text-xs text-[#D4AF37] print:text-neutral-700 mt-0.5">
                   <span>{edu.degree}</span>
-                  <span className="font-bold font-mono">CGPA: {edu.cgpa}</span>
+                  <span className="font-bold font-mono">{edu.gradeType || "CGPA"}: {edu.cgpa}</span>
                 </div>
                 {edu.notes && (
                   <p className="text-xs text-[#A69C93] print:text-neutral-600 mt-1">

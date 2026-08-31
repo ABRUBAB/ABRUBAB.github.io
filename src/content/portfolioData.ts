@@ -21,6 +21,7 @@ export const profileData: ProfileData = {
       institution: "Daffodil International University (DIU)",
       period: "2023 – Present (Final Year)",
       cgpa: "3.84 / 4.00",
+      gradeType: "CGPA",
       notes: "Research Track, Dean's Honor Roll. Team Lead at DIU GPU Infrastructure Platform, Research Associate at NBTC, and Member at HIRL."
     },
     {
@@ -28,6 +29,7 @@ export const profileData: ProfileData = {
       institution: "B.A.F. Shaheen College Kurmitola",
       period: "2019 – 2021",
       cgpa: "5.00 / 5.00",
+      gradeType: "GPA",
       notes: "Academic Excellence Award; Executive Committee Member of IT Club & Atomic Science Club."
     }
   ],

@@ -120,6 +120,7 @@ export interface ProfileData {
     institution: string;
     period: string;
     cgpa: string;
+    gradeType?: 'CGPA' | 'GPA';
     notes?: string;
   }[];
   contacts: {

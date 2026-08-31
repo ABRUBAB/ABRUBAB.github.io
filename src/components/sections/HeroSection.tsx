@@ -82,13 +82,13 @@ export function HeroSection({ onToggleReviewerMode, onOpenContact }: HeroSection
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
-              <a
-                href="#about"
+              <Link
+                href="/about"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#6E1423] to-[#941B32] hover:brightness-110 text-[#EDE7DD] text-xs sm:text-sm font-semibold transition-all shadow-lg hover:shadow-[0_0_25px_rgba(142,28,48,0.5)] active:scale-95 border border-[#8E1C30]"
               >
                 <span>Read Biography & Vision</span>
                 <ChevronRight className="w-4 h-4" />
-              </a>
+              </Link>
 
               <Link
                 href="/cv"
