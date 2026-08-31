@@ -11,6 +11,7 @@ import { FooterSection } from "@/components/sections/FooterSection";
 import { ContactModal } from "@/components/ui/ContactModal";
 import { BibtexModal } from "@/components/ui/BibtexModal";
 import { NeuralNetBackground } from "@/components/ui/NeuralNetBackground";
+import { DimensionRipIntro } from "@/components/ui/DimensionRipIntro";
 import { publications, projects, experienceRoles, awardsAndLeadership } from "@/content/portfolioData";
 import { Publication } from "@/content/types";
 import { 
@@ -42,6 +43,9 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#0B0A0C] text-[#EDE7DD] relative overflow-hidden">
+      {/* High-Tech Evidential AI Dimension Rip & Portal Breach Intro */}
+      <DimensionRipIntro />
+
       {/* Interactive Neural Synapse Net Background */}
       <NeuralNetBackground />
 
