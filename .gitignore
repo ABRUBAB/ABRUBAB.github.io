@@ -40,4 +40,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 qa_audit_artifacts/
+qa_results/
 scripts/
+shots/
+scratch/
+
+# Temporary user uploads and external screenshots
+frontend_tech.jpg
+*.tmp
+*.log
