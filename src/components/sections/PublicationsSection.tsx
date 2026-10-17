@@ -96,7 +96,7 @@ export function PublicationsSection() {
             const isExpanded = !!expandedPubIds[pub.id];
 
             return (
-              <div
+              <article
                 key={pub.id}
                 id={`paper-${pub.id}`}
                 className={`p-5 sm:p-6 rounded-3xl transition-all duration-300 border ${
@@ -204,7 +204,7 @@ export function PublicationsSection() {
                     </div>
                   </div>
                 )}
-              </div>
+              </article>
             );
           })}
         </div>
