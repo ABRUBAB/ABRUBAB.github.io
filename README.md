@@ -36,7 +36,7 @@
 > **Mission:** Standard deep learning models suffer from silent overconfidence—generating 99% confident diagnostic predictions on corrupted scans, scanner artifacts, or rare diseases. My research focuses on giving medical AI models self-awareness, enabling them to quantify their own uncertainty and autonomously triage high-risk scans to human clinical specialists.
 
 ### 🏛️ Institutional Appointments & Leadership
-- **Research Associate** — [NanoBio Technology Center (NBTC)](https://diu.ac), DIU *(Supervised by Dr. Md. Ali Hossain, Director, NBTC)* [2025 – Present]
+- **Lead Research Assistant** — [NanoBio Technology Center (NBTC)](https://diu.ac), DIU *(Supervised by Dr. Md. Ali Hossain, Director, NBTC)* [2025 – Present]
 - **Team Lead & AI/ML Backend Developer** — [DIU Distributed GPU Cluster Infrastructure Platform](https://abdullahrubab.me/#experience) [2026 – Present]
 - **Research Member** — [Health Informatics Research Laboratory (HIRL)](https://diu.ac), Dept. of CSE, DIU [2024 – Present]
 - **Lead AI/ML & Backend Developer** — [Keyoon.com](https://keyoon.com) [2026 – Present]

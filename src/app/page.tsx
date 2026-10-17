@@ -27,6 +27,8 @@ import {
 } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { BorderBeam } from "@/components/ui/BorderBeam";
+import { BacklitGlow } from "@/components/ui/BacklitGlow";
+import { ShimmerButton } from "@/components/ui/ShimmerButton";
 
 export default function Home() {
   const { isReviewerMode, toggleReviewerMode } = useReviewerMode();
@@ -61,31 +63,31 @@ export default function Home() {
           {/* Section 1: Morphic Biography & Vision Hook with Backlit UI / Kokonut UI Spotlight */}
           <section className="py-16 sm:py-20 relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <SpotlightCard
-                spotlightColor="rgba(212, 175, 55, 0.14)"
-                borderColor="rgba(212, 175, 55, 0.4)"
-                className="p-8 sm:p-12 shadow-2xl space-y-6 bg-gradient-to-b from-[#151316]/95 via-[#110F13]/95 to-[#151316]/95 border-[#D4AF37]/40"
-              >
-                <BorderBeam size={280} duration={14} colorFrom="#D4AF37" colorTo="#6E1423" />
-                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/10">
-                  <div className="space-y-2">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6E1423]/35 border border-[#6E1423]/80 text-xs font-semibold text-[#EDE7DD]">
-                      <HeartPulse className="w-3.5 h-3.5 text-[#D4AF37]" />
-                      Research Thesis & Clinical Focus
+              <BacklitGlow glowColor="rgba(212, 175, 55, 0.16)">
+                <SpotlightCard
+                  spotlightColor="rgba(212, 175, 55, 0.14)"
+                  borderColor="rgba(212, 175, 55, 0.4)"
+                  className="p-8 sm:p-12 shadow-2xl space-y-6 bg-gradient-to-b from-[#151316]/95 via-[#110F13]/95 to-[#151316]/95 border-[#D4AF37]/40"
+                >
+                  <BorderBeam size={280} duration={14} colorFrom="#D4AF37" colorTo="#6E1423" />
+                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/10">
+                    <div className="space-y-2">
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6E1423]/35 border border-[#6E1423]/80 text-xs font-semibold text-[#EDE7DD]">
+                        <HeartPulse className="w-3.5 h-3.5 text-[#D4AF37]" />
+                        Research Thesis & Clinical Focus
+                      </div>
+                      <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#EDE7DD]">
+                        Trustworthy Medical AI & Uncertainty Quantification
+                      </h2>
                     </div>
-                    <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#EDE7DD]">
-                      Trustworthy Medical AI & Uncertainty Quantification
-                    </h2>
-                  </div>
 
-                  <Link
-                    href="/about"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#6E1423] hover:bg-[#8E1C30] text-xs font-semibold text-white transition-all shadow-md active:scale-95 border border-[#8E1C30] shrink-0"
-                  >
-                    <span>Read Full Journey & Philosophy</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#D4AF37]" />
-                  </Link>
-                </div>
+                    <Link href="/about" className="inline-block shrink-0">
+                      <ShimmerButton shimmerColor="rgba(212, 175, 55, 0.4)">
+                        <span>Read Full Journey & Philosophy</span>
+                        <ArrowRight className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      </ShimmerButton>
+                    </Link>
+                  </div>
 
                 <p className="text-sm sm:text-base text-[#A69C93] leading-relaxed max-w-4xl">
                   Standard deep learning models produce silent 99% confident misdiagnoses when encountering unseen pathologies or corrupted scanner scans. Through <strong>Evidential Deep Learning (Dirichlet prior parameterization)</strong> and knowledge distillation, I engineer neural architectures that quantify their own epistemic uncertainty in a single pass—autonomously routing high-risk scans to human clinical specialists.
@@ -118,8 +120,9 @@ export default function Home() {
                   </div>
                 </div>
               </SpotlightCard>
-            </div>
-          </section>
+            </BacklitGlow>
+          </div>
+        </section>
 
           {/* Section 2: Interactive Scientific Diagrams & Uncertainty Triage Pipeline */}
           <ResearchDiagramsSection />

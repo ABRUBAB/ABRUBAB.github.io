@@ -18,7 +18,7 @@ Build a visually distinctive, research-grade 3D portfolio website for Abdullah R
 - **Location:** Uttara, Dhaka-1230, Bangladesh
 - **Education:** B.Sc. in Computer Science & Engineering, Daffodil International University (DIU), 2023–present, CGPA 3.84/4.00. HSC (Science), B.A.F. Shaheen College Kurmitola, 2019–2021, GPA 5.00/5.00.
 - **Current roles:**
-  - Research Associate, NanoBio Technology Center (NBTC), DIU — HIRL Lab, under Dr. Md. Ali Hossain (Associate Professor, Dept. of CSE & Director, NBTC)
+  - Lead Research Assistant, NanoBio Technology Center (NBTC), DIU — HIRL Lab, under Dr. Md. Ali Hossain (Associate Professor, Dept. of CSE & Director, NBTC)
   - Team Lead & AI/ML Backend Developer — DIU GPU Cluster / Distributed AI Infrastructure Platform (an internal initiative to connect and operate DIU's existing GPUs as a shared campus resource)
   - Lead AI/ML & Backend Developer — Keyoon.com *(Rubab: add 1–2 lines on what Keyoon.com does and your specific contributions — the agent needs this to write an accurate project blurb; don't let it guess)*
 - **Research focus:** uncertainty-aware medical AI — evidential deep learning, few-shot learning, explainable AI (XAI), multimodal fusion, knowledge distillation, applied to medical imaging.
@@ -146,7 +146,7 @@ Reuse geometries and materials across scenes rather than authoring unique ones p
 3. **Research pillars** — the four pillar cards (§6.2 above).
 4. **Publications** — the status ladder (§2), fully linked (DOI, venue).
 5. **Flagship projects** — deep-dive cards (§3).
-6. **Systems & leadership** — GPU cluster team lead role, NBTC Research Associate role, Keyoon.com role.
+6. **Systems & leadership** — GPU cluster team lead role, NBTC Lead Research Assistant role, Keyoon.com role.
 7. **Recognition** — hackathon win, datathon result, poster presentation.
 8. **Trajectory: why Spain / Europe** — the globe scene (§7.7), naming the actual target programs.
 9. **Footer** — CV download (PDF), Scholar, GitHub, LinkedIn, email.

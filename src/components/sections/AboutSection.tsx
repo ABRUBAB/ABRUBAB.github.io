@@ -45,7 +45,7 @@ export function AboutSection({ onOpenContact }: { onOpenContact: () => void }) {
                 Building AI Doctors Can Actually Trust
               </h3>
               <p>
-                I am a final-year Computer Science & Engineering student at <strong>Daffodil International University (DIU)</strong>, a <strong>Research Associate</strong> at the <strong>NanoBio Technology Center (NBTC)</strong> under Dr. Md. Ali Hossain, and an active member of the <strong>Health Informatics Research Laboratory (HIRL)</strong>.
+                I am a final-year Computer Science & Engineering student at <strong>Daffodil International University (DIU)</strong>, a <strong>Lead Research Assistant</strong> at the <strong>NanoBio Technology Center (NBTC)</strong> under Dr. Md. Ali Hossain, and an active member of the <strong>Health Informatics Research Laboratory (HIRL)</strong>.
               </p>
               <p>
                 My passion is solving real-world medical safety problems. Most standard AI models are dangerously overconfident—they will make a 99% confident guess even when handed a corrupted scan, a rare disease, or a low-quality image. My research focuses on giving medical AI models self-awareness, so they know their own limits and automatically flag uncertain cases for human doctors to review.

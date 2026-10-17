@@ -40,9 +40,9 @@
 ```
 ┌───────────────────────────────┬─────────────────────────────────────────────────────────┐
 │ 🎓 Degree & Institution       │ B.Sc. in Computer Science & Engineering (Final Year)     │
-│                               │ Daffodil International University (DIU) • CGPA: 3.84/4.0│
+│                               │ Daffodil International University (DIU) • CGPA: 3.80/4.0│
 ├───────────────────────────────┼─────────────────────────────────────────────────────────┤
-│ 🔬 Research Appointments      │ • Research Associate @ NanoBio Technology Center (NBTC) │
+│ 🔬 Research Appointments      │ • Lead Research Assistant @ NanoBio Technology Center (NBTC) │
 │                               │   (Supervised by Dr. Md. Ali Hossain, Director, NBTC)   │
 │                               │ • Member @ Health Informatics Research Lab (HIRL)       │
 ├───────────────────────────────┼─────────────────────────────────────────────────────────┤

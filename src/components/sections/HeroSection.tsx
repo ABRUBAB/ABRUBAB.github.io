@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon, ResearchGateIcon, OrcidIcon } from "@/components/ui/BrandIcons";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { AnimePulseNetwork } from "@/components/ui/AnimePulseNetwork";
+import { ShimmerButton } from "@/components/ui/ShimmerButton";
 
 const HeroParticleAvatar = dynamic(
   () => import("../3d/HeroParticleAvatar").then((mod) => mod.HeroParticleAvatar),
@@ -52,7 +54,7 @@ export function HeroSection({ onToggleReviewerMode, onOpenContact }: HeroSection
             {/* Status Pill */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#151316] border border-[#6E1423]/80 text-xs font-medium text-[#EDE7DD] shadow-lg">
               <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-ping" />
-              <span>B.Sc. CSE Final Year (CGPA 3.80/4.00) • DIU • NBTC (RA) • HIRL</span>
+              <span>B.Sc. CSE Final Year (CGPA 3.80/4.00) • DIU • NBTC (Lead RA) • HIRL</span>
             </div>
 
             {/* Main Headline */}
@@ -67,6 +69,12 @@ export function HeroSection({ onToggleReviewerMode, onOpenContact }: HeroSection
             <p className="text-base sm:text-lg text-[#A69C93] leading-relaxed font-body">
               Specialized in <strong className="text-[#EDE7DD]">Evidential Deep Learning</strong>, <strong className="text-[#EDE7DD]">Uncertainty Quantification</strong>, and <strong className="text-[#EDE7DD]">Knowledge Distillation</strong> for trustworthy clinical diagnosis in resource-constrained environments.
             </p>
+
+            {/* Anime.js Neural Synapse Propagation Indicator */}
+            <AnimePulseNetwork
+              className="self-start"
+              activeLabel="Dirichlet Prior Neural Synapse Active"
+            />
 
             {/* Novel Vision & Thesis Callout with Interactive Spotlight */}
             <SpotlightCard
@@ -87,12 +95,11 @@ export function HeroSection({ onToggleReviewerMode, onOpenContact }: HeroSection
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#6E1423] to-[#941B32] hover:brightness-110 text-[#EDE7DD] text-xs sm:text-sm font-semibold transition-all shadow-lg hover:shadow-[0_0_25px_rgba(142,28,48,0.5)] active:scale-95 border border-[#8E1C30]"
-              >
-                <span>Read Biography & Vision</span>
-                <ChevronRight className="w-4 h-4" />
+              <Link href="/about" className="inline-block">
+                <ShimmerButton shimmerColor="rgba(212, 175, 55, 0.5)">
+                  <span>Read Biography & Vision</span>
+                  <ChevronRight className="w-4 h-4 text-[#D4AF37]" />
+                </ShimmerButton>
               </Link>
 
               <Link

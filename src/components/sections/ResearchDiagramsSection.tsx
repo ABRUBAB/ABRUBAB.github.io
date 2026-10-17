@@ -18,6 +18,7 @@ import {
   Database,
   UserCheck
 } from "lucide-react";
+import { AnimePulseNetwork } from "@/components/ui/AnimePulseNetwork";
 
 export function ResearchDiagramsSection() {
   const [activeTab, setActiveTab] = useState<"pipeline" | "comparison" | "xai" | "federated">("pipeline");
@@ -52,11 +53,12 @@ export function ResearchDiagramsSection() {
           </div>
         </div>
 
-        {/* Tab Selection Bar */}
-        <div className="flex flex-wrap items-center gap-2 pb-6 border-b border-white/10 mb-8">
-          <button
-            onClick={() => setActiveTab("pipeline")}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-2 border ${
+        {/* Tab Selection Bar & Anime.js Telemetry */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-white/10 mb-8">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={() => setActiveTab("pipeline")}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-2 border ${
               activeTab === "pipeline"
                 ? "bg-[#D4AF37] text-black border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.25)] font-bold scale-[1.02]"
                 : "bg-[#151316] text-[#A69C93] hover:text-[#EDE7DD] border-white/10 hover:border-white/20"
@@ -101,6 +103,19 @@ export function ResearchDiagramsSection() {
             <Network className="w-3.5 h-3.5" />
             <span>Federated Learning Topology</span>
           </button>
+          </div>
+
+          <AnimePulseNetwork
+            activeLabel={
+              activeTab === "pipeline"
+                ? "Dirichlet Triage Synapse"
+                : activeTab === "comparison"
+                ? "Evidential Loss Accumulator"
+                : activeTab === "xai"
+                ? "Grad-CAM++ Attribution Stream"
+                : "Differential Privacy Aggregator"
+            }
+          />
         </div>
 
         {/* TAB 1: Uncertainty-Aware Clinical Triage Pipeline */}

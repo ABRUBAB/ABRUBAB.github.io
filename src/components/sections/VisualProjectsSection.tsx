@@ -467,14 +467,6 @@ export function VisualProjectsSection() {
             {/* PROJECT 5: Brain Tumor MRI Classification (Interactive Grad-CAM++ Preview) */}
             <div className="p-6 sm:p-8 rounded-3xl bg-[#151316]/90 border border-white/10 hover:border-[#D4AF37]/50 backdrop-blur-xl shadow-xl flex flex-col justify-between space-y-6">
               <div className="space-y-4">
-                {/* Live Browser Mockup */}
-                {renderBrowserFrame(
-                  "/assets/projects/brain_tumor_hf_hero.png",
-                  "Brain Tumor MRI Classifier Live HuggingFace Space",
-                  "https://huggingface.co/spaces/ABRUBAB/brain-tumor-classifier",
-                  "aspect-[16/10]"
-                )}
-
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-mono uppercase tracking-wider text-[#D4AF37]">
                     Neuro-Oncology & Explainability

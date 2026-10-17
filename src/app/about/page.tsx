@@ -66,7 +66,7 @@ export default function AboutPage() {
             </span>
           </h1>
           <p className="text-base sm:text-lg text-[#A69C93] max-w-3xl leading-relaxed">
-            Final-year Computer Science & Engineering researcher at Daffodil International University (DIU), Research Associate at the NanoBio Technology Center (NBTC), Member at HIRL, and Team Lead for the DIU Campus GPU Cluster.
+            Final-year Computer Science & Engineering researcher at Daffodil International University (DIU), Lead Research Assistant at the NanoBio Technology Center (NBTC), Member at HIRL, and Team Lead for the DIU Campus GPU Cluster.
           </p>
         </div>
 

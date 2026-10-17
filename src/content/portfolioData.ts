@@ -22,7 +22,7 @@ export const profileData: ProfileData = {
       period: "2023 – Present (Final Year)",
       cgpa: "3.80 / 4.00",
       gradeType: "CGPA",
-      notes: "Research Track, Dean's Honor Roll. Team Lead at DIU GPU Infrastructure Platform, Research Associate at NBTC, and Member at HIRL."
+      notes: "Research Track, Dean's Honor Roll. Team Lead at DIU GPU Infrastructure Platform, Lead Research Assistant at NBTC, and Member at HIRL."
     },
     {
       degree: "Higher Secondary Certificate (HSC) — Science",
@@ -407,7 +407,6 @@ export const flagshipProjects: Project[] = [
     ],
     github: "https://github.com/ABRUBAB/brain-tumor-mri-classification",
     demoUrl: "https://huggingface.co/spaces/ABRUBAB/brain-tumor-classifier",
-    image: "/assets/projects/brain_tumor_hf_hero.png",
     visualType: "gradcam",
     featured: true
   },
@@ -452,7 +451,7 @@ export const projects = flagshipProjects;
 export const experienceRoles: ExperienceRole[] = [
   {
     id: "nbtc-ra",
-    title: "Research Associate",
+    title: "Lead Research Assistant",
     organization: "NanoBio Technology Center (NBTC), DIU",
     location: "Dhaka, Bangladesh",
     period: "2025 – Present",
