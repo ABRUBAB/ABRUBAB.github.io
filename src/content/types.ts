@@ -42,7 +42,8 @@ export interface Project {
   github?: string;
   demoUrl?: string;
   award?: string;
-  visualType: 'gradcam' | 'coverage_curve' | 'architecture' | 'cluster' | 'agent';
+  visualType: 'gradcam' | 'coverage_curve' | 'architecture' | 'cluster' | 'agent' | 'screenshot';
+  image?: string;
   imagePlaceholder?: string;
   featured: boolean;
 }

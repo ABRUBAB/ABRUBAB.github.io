@@ -18,7 +18,8 @@ import {
   Terminal,
   Cpu,
   Layers,
-  Award
+  Award,
+  Globe
 } from "lucide-react";
 import { GithubIcon } from "@/components/ui/BrandIcons";
 
@@ -56,15 +57,15 @@ export default function ProjectsPage() {
             Flagship Engineering Projects
           </div>
           <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#EDE7DD] tracking-tight leading-tight">
-            Applied Medical Systems & High-Performance AI
+            Applied Systems, Planetary Simulators & Live AI
           </h1>
           <p className="text-base sm:text-lg text-[#A69C93] max-w-3xl leading-relaxed">
-            From 1st Place Hackathon-winning predictive GPU telemetry platforms to differential-privacy federated clinical diagnostic systems.
+            From 1st Place Hackathon-winning GPU cluster telemetry middleware to NASA Space Apps planetary analog simulation platforms and live fraud prevention architectures.
           </p>
         </div>
 
         {/* Projects Deep-Dive List */}
-        <div className="space-y-8 mb-16">
+        <div className="space-y-12 mb-16">
           {projects.map((project, idx) => (
             <article
               key={project.id}
@@ -81,7 +82,7 @@ export default function ProjectsPage() {
                     0{idx + 1}
                   </span>
                   <span className="text-xs font-mono uppercase tracking-wider text-[#D4AF37]">
-                    {project.tags[0] || "Medical AI"}
+                    {project.tags[0] || "AI System"}
                   </span>
                 </div>
 
@@ -102,6 +103,64 @@ export default function ProjectsPage() {
                   {project.subtitle}
                 </p>
               </div>
+
+              {/* Live Preview Screenshot Browser Frame Mockup */}
+              {project.image && (
+                <div className="rounded-2xl border border-white/15 bg-[#070608] overflow-hidden shadow-2xl group relative my-6">
+                  {/* Browser Chrome Header */}
+                  <div className="px-4 py-2.5 bg-[#151316] border-b border-white/10 flex items-center justify-between gap-3 text-xs">
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block" />
+                    </div>
+
+                    <div className="flex-1 max-w-md mx-auto px-3 py-1 rounded-lg bg-[#0B0A0C] border border-white/5 flex items-center justify-center gap-2 text-[11px] font-mono text-[#A69C93] truncate">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                      <span className="truncate text-[#EDE7DD]/80">
+                        {project.demoUrl ? project.demoUrl.replace("https://", "") : "production-deployment"}
+                      </span>
+                    </div>
+
+                    {project.demoUrl && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-mono text-[#D4AF37] hover:text-[#FFF2A3] flex items-center gap-1 shrink-0 transition-colors"
+                      >
+                        <span>Live Demo</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+                  </div>
+
+                  {/* Screenshot with Hover Zoom Animation */}
+                  <div className="relative aspect-[16/9] max-h-[460px] overflow-hidden bg-[#0A090C]">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A0C]/70 via-transparent to-transparent opacity-50 group-hover:opacity-20 transition-opacity" />
+                    
+                    {project.demoUrl && (
+                      <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-1 group-hover:translate-y-0">
+                        <a
+                          href={project.demoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#6E1423] text-white text-xs font-semibold shadow-lg border border-[#8E1C30] hover:bg-[#8E1C30]"
+                        >
+                          <span>Visit Live Platform</span>
+                          <ExternalLink className="w-3.5 h-3.5 text-[#D4AF37]" />
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Descriptions */}
               <div className="space-y-3 text-xs sm:text-sm text-[#A69C93] leading-relaxed">
@@ -183,7 +242,7 @@ export default function ProjectsPage() {
                       href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0B0A0C] hover:bg-white/5 border border-white/10 text-xs font-semibold text-[#EDE7DD] hover:text-[#E5BE38] transition-all"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0B0A0C] hover:bg-white/5 border border-white/10 text-xs font-semibold text-[#EDE7DD] hover:text-[#E5BE38] hover:border-[#D4AF37] transition-all"
                     >
                       <ExternalLink className="w-4 h-4 text-[#D4AF37]" />
                       <span>Live Demonstration</span>
@@ -192,7 +251,7 @@ export default function ProjectsPage() {
                 </div>
 
                 <span className="text-xs font-mono text-[#A69C93]">
-                  Status: Validated Implementation
+                  {project.demoUrl ? "Live Production Deployment" : "Open Source Repository"}
                 </span>
               </div>
             </article>

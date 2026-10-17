@@ -318,8 +318,8 @@ export const flagshipProjects: Project[] = [
     title: "NeuralSched",
     subtitle: "GPU-Cluster Intelligence Middleware — 1st Place Champion, AI Hackathon 2026",
     description: "Middleware sitting above Kubernetes / SLURM using four trained ML models for intelligent job placement, carbon-aware scheduling, and failure prevention.",
-    longDescription: "Features GraphSAGE GNN + PPO for job placement, a carbon-aware LSTM for green scheduling, a Temporal Convolutional Network (TCN) with SHAP for node-failure forecasting, and an LSTM for GPU utilization forecasting. Performs automated checkpoint-and-migrate 45 minutes before critical hardware crashes.",
-    tags: ["GraphSAGE GNN", "PPO RL", "TCN Failure Prediction", "Kubernetes / SLURM", "PyTorch"],
+    longDescription: "Built by Team ShadowForge at DIU. NeuralSched is an intelligent middleware layer above Kubernetes and SLURM driven by four trained ML models: SmartPack (GraphSAGE GNN + PPO) for topology-aware GPU placement, GreenSched (Carbon LSTM 24h forecast) for green window shifting, SentinelAI (Temporal Convolutional Network + SHAP) for node failure prediction with 45-min pre-crash lead time, and CostCut (Utilization LSTM) for idle-GPU reclamation.",
+    tags: ["GraphSAGE GNN", "PPO RL", "TCN Failure Prediction", "Kubernetes / SLURM", "PyTorch", "FastAPI"],
     methods: ["GraphSAGE GNN Job Placement", "Carbon-Aware Green Scheduling", "TCN Node Failure Forecasting", "Zero-Loss Checkpoint Migration"],
     results: [
       { label: "Hackathon Result", value: "1st Place", sublabel: "DIU AI Innovation Hackathon 2026" },
@@ -328,7 +328,68 @@ export const flagshipProjects: Project[] = [
     ],
     award: "Champion (1st Place) — DIU AI Innovation Hackathon 2026",
     github: "https://github.com/ABRUBAB/neuralsched",
-    visualType: "cluster",
+    demoUrl: "https://neuralsched.vercel.app",
+    image: "/assets/projects/neuralsched_hero.png",
+    visualType: "screenshot",
+    featured: true
+  },
+  {
+    id: "shadowastra",
+    title: "ShadowAstra Atlas",
+    subtitle: "Planetary Analog Simulation Platform — NASA Space Apps Challenge 2026 (Dhaka)",
+    description: "Matches Moon & Mars mission tasks to terrestrial analog sites on Earth, comparing 3D terrain slabs cut to scale and simulating low-angle polar solar illumination.",
+    longDescription: "Built for NASA Space Apps Challenge 2026 (Dhaka). Catches 'false friends' by matching specific mission tasks (rover mobility, subsurface ice drilling, lava tube habitats) to open Earth, Moon, and Mars datasets from NASA and ESA. Features 3D terrain slabs cut to scale with satellite imagery, a Shadow Lab calculating lunar-polar permanently shadowed regions (PSRs) where water ice hides, and a Light Twin calendar for solar azimuth and elevation matching.",
+    tags: ["NASA Space Apps", "React 19", "Three.js WebGL", "TypeScript", "Vite 8", "NASA / ESA Data"],
+    methods: ["Task-Driven Analog Scoring", "3D Terrain Slab Comparison", "Lunar Polar Shadow Lab", "Solar Light-Twin Calendar"],
+    results: [
+      { label: "Challenge", value: "NASA Space Apps", sublabel: "Dhaka Event 2026" },
+      { label: "3D Rendering", value: "Three.js WebGL", sublabel: "Blue & Black Marble Shaders" },
+      { label: "Data Pipeline", value: "NASA & ESA", sublabel: "Open Earth, Moon & Mars Catalogues" }
+    ],
+    award: "NASA Space Apps Challenge 2026 · Dhaka",
+    github: "https://github.com/ABRUBAB/ShadowAstra_Atlas",
+    demoUrl: "https://shadowastra-atlas.vercel.app",
+    image: "/assets/projects/shadowastra_hero.png",
+    visualType: "screenshot",
+    featured: true
+  },
+  {
+    id: "uvera",
+    title: "UVERA",
+    subtitle: "Editorial Multi-Modal Risk & Fraud Prevention — 4th Place, AI DEV FEST 2026",
+    description: "A 3-layer trust field architecture for mobile money fraud prevention with calm state transitions and real-time transaction holding.",
+    longDescription: "Engineered during the AI DEV FEST 2026 Hackathon (Track 07 Open Innovation). Features a 3-layer trust field evaluating multi-modal transaction risks in under 18ms. Triggers a mid-edge pause ring to hold fraudulent transactions in real-time with plain Bangla and English explanations, includes QR Shield to detect merchant mule cashouts, and unifies fragmented alerts into a single operations dispute case.",
+    tags: ["Risk AI", "Trust Field", "Hackathon Finalist", "FastAPI", "Next.js 16", "Python 3.12"],
+    methods: ["3-Layer Trust Field", "Calm State Transitions", "Mid-Edge Pause Ring", "Real-Time Scoring (<18ms)"],
+    results: [
+      { label: "Hackathon Placement", value: "4th Place", sublabel: "AI DEV FEST 2026 AI Hackathon" },
+      { label: "Evaluation Speed", value: "<18ms", sublabel: "Real-Time Transaction Scoring" },
+      { label: "Intervention", value: "Pause Ring", sublabel: "Zero False-Block User Friction" }
+    ],
+    award: "4th Place — AI DEV FEST 2026 AI Hackathon (Track 07)",
+    github: "https://github.com/ABRUBAB/takaresolve-ai-hackathon-2026",
+    demoUrl: "https://uvera-ai.vercel.app",
+    image: "/assets/projects/uvera_hero.png",
+    visualType: "screenshot",
+    featured: true
+  },
+  {
+    id: "yinglong",
+    title: "YINGLONG",
+    subtitle: "Verifiable Autonomous Agent Wallet with Locked Spending Mandates",
+    description: "An AI agent that pays for you and cannot break your rules. Enforces sealed plain-language spending mandates via smart contracts on FISCO BCOS and Base Sepolia.",
+    longDescription: "Topic F: Agent Wallet. An autonomous agent wallet with sealed plain-language mandates compiled into smart contracts. The blockchain strictly blocks unauthorized or out-of-mandate transactions and provides cryptographic receipts for every action, verified through a live transaction map and proof explorer.",
+    tags: ["Agent Wallet", "FISCO BCOS", "Base Sepolia", "Solidity", "Passkeys", "Next.js"],
+    methods: ["Plain-Language Mandate Compilation", "On-Chain Mandate Enforcement", "Tamper-Proof Receipt Ledger", "FastPass Zero-Knowledge Verification"],
+    results: [
+      { label: "Security Mandate", value: "100% Locked", sublabel: "Zero Unmandated Execution" },
+      { label: "Supported Blockchains", value: "Dual Chain", sublabel: "FISCO BCOS + Base Sepolia" },
+      { label: "Audit Receipts", value: "Cryptographic", sublabel: "Live Verification Explorer" }
+    ],
+    github: "https://github.com/ABRUBAB/YINGLONG",
+    demoUrl: "https://app.yinglong-agent.tech",
+    image: "/assets/projects/yinglong_hero.png",
+    visualType: "screenshot",
     featured: true
   },
   {
@@ -346,6 +407,7 @@ export const flagshipProjects: Project[] = [
     ],
     github: "https://github.com/ABRUBAB/brain-tumor-mri-classification",
     demoUrl: "https://huggingface.co/spaces/ABRUBAB/brain-tumor-classifier",
+    image: "/assets/projects/brain_tumor_hf_hero.png",
     visualType: "gradcam",
     featured: true
   },
@@ -364,24 +426,6 @@ export const flagshipProjects: Project[] = [
     ],
     github: "https://github.com/ABRUBAB/ResearchForge-AI",
     visualType: "agent",
-    featured: true
-  },
-  {
-    id: "uvera",
-    title: "UVERA",
-    subtitle: "Editorial Multi-Modal Risk & Fraud Prevention — 4th Place, AI DEV FEST 2026",
-    description: "A 3-layer trust field architecture for multi-modal risk and fraud prevention with calm state transitions and real-time transaction holding.",
-    longDescription: "Engineered during the AI DEV FEST 2026 Hackathon. Features a 3-layer trust field where high-risk anomalies trigger an instant pause ring, mitigating scam payments mid-edge while preserving legitimate user velocity.",
-    tags: ["Risk AI", "Trust Field", "Hackathon Finalist", "Editorial UI", "FastAPI"],
-    methods: ["3-Layer Trust Field", "Calm State Transitions", "Mid-Edge Pause Ring", "Real-Time Scoring"],
-    results: [
-      { label: "Hackathon Placement", value: "4th Place", sublabel: "AI DEV FEST 2026 AI Hackathon" },
-      { label: "Evaluation Speed", value: "<18ms", sublabel: "Real-Time Transaction Scoring" },
-      { label: "Intervention", value: "Pause Ring", sublabel: "Zero False-Block User Friction" }
-    ],
-    award: "4th Place — AI DEV FEST 2026 AI Hackathon",
-    github: "https://github.com/ABRUBAB",
-    visualType: "architecture",
     featured: true
   },
   {
