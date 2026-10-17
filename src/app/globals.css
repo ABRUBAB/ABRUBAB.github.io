@@ -106,6 +106,32 @@
   animation: goldPulse 3.5s infinite ease-in-out;
 }
 
+/* Border beam and shimmer animations for Kokonut UI and Backlit UI styling */
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+.animate-border-beam {
+  animation: border-beam var(--duration) infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(212,175,55,0.15) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite linear;
+}
+
 /* Academic paper typography */
 .font-display {
   font-family: var(--font-fraunces), serif;

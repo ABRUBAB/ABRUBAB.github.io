@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { GithubIcon } from "@/components/ui/BrandIcons";
 import { projects } from "@/content/portfolioData";
+import { BorderBeam } from "@/components/ui/BorderBeam";
 
 export function VisualProjectsSection() {
   const [selectedMriClass, setSelectedMriClass] = useState<"glioma" | "meningioma" | "pituitary">("glioma");
@@ -117,8 +118,9 @@ export function VisualProjectsSection() {
         {/* Heterogeneous Visual Compositions Grid */}
         <div className="space-y-12">
           {/* PROJECT 1: NeuralSched (Large Featured Showcase with Hero Screenshot & Telemetry) */}
-          <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-b from-[#18151A]/95 via-[#121014]/95 to-[#18151A]/95 border-2 border-[#D4AF37]/60 backdrop-blur-xl shadow-2xl space-y-8">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-white/10 pb-6">
+          <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-b from-[#18151A]/95 via-[#121014]/95 to-[#18151A]/95 border-2 border-[#D4AF37]/60 backdrop-blur-xl shadow-2xl space-y-8 relative overflow-hidden">
+            <BorderBeam size={350} duration={14} colorFrom="#D4AF37" colorTo="#6E1423" />
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
               <div className="space-y-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-xs font-bold text-[#E5BE38]">
                   <Award className="w-3.5 h-3.5" />

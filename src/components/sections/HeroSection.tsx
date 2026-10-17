@@ -14,6 +14,7 @@ import {
   Layers
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon, ResearchGateIcon, OrcidIcon } from "@/components/ui/BrandIcons";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 const HeroParticleAvatar = dynamic(
   () => import("../3d/HeroParticleAvatar").then((mod) => mod.HeroParticleAvatar),
@@ -67,8 +68,12 @@ export function HeroSection({ onToggleReviewerMode, onOpenContact }: HeroSection
               Specialized in <strong className="text-[#EDE7DD]">Evidential Deep Learning</strong>, <strong className="text-[#EDE7DD]">Uncertainty Quantification</strong>, and <strong className="text-[#EDE7DD]">Knowledge Distillation</strong> for trustworthy clinical diagnosis in resource-constrained environments.
             </p>
 
-            {/* Novel Vision & Thesis Callout (Replacing transactional banner) */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#151316] to-[#1C191E] border border-[#D4AF37]/35 flex items-start gap-3.5 text-xs text-[#EDE7DD] shadow-xl">
+            {/* Novel Vision & Thesis Callout with Interactive Spotlight */}
+            <SpotlightCard
+              spotlightColor="rgba(212, 175, 55, 0.15)"
+              borderColor="rgba(212, 175, 55, 0.45)"
+              className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#151316] to-[#1C191E] border border-[#D4AF37]/35 flex items-start gap-3.5 text-xs text-[#EDE7DD] shadow-xl"
+            >
               <ShieldCheck className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
               <div>
                 <strong className="text-[#FFF2A3] text-sm block mb-0.5">
@@ -78,7 +83,7 @@ export function HeroSection({ onToggleReviewerMode, onOpenContact }: HeroSection
                   Parameterizing Dirichlet belief priors over vision transformers and neural ensembles to turn black-box classifiers into self-aware diagnostic triage systems.
                 </span>
               </div>
-            </div>
+            </SpotlightCard>
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3 pt-2">

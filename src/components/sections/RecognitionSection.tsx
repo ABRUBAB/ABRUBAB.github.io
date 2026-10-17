@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { awardsAndLeadership } from "@/content/portfolioData";
 import { Trophy, Sparkles, ExternalLink, X, Award, CheckCircle2 } from "lucide-react";
+import { BorderBeam } from "../ui/BorderBeam";
 
 export function RecognitionSection() {
   const [photoModalOpen, setPhotoModalOpen] = useState(false);
@@ -25,9 +26,10 @@ export function RecognitionSection() {
           </p>
         </div>
 
-        {/* Highlighted Grand Champion Card with Actual Ceremony Photo */}
+        {/* Highlighted Grand Champion Card with Actual Ceremony Photo & BorderBeam */}
         <div className="mb-10 p-6 sm:p-8 lg:p-10 rounded-3xl bg-gradient-to-r from-[#151316] via-[#1C191E] to-[#151316] border border-[#D4AF37]/60 shadow-[0_0_35px_rgba(212,175,55,0.2)] relative overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <BorderBeam size={300} duration={14} colorFrom="#D4AF37" colorTo="#6E1423" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             {/* Left Column: Details */}
             <div className="lg:col-span-7 space-y-4">
               <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#D4AF37]/20 text-[#E5BE38] border border-[#D4AF37]/70 text-xs font-bold uppercase tracking-wider">
@@ -128,7 +130,7 @@ export function RecognitionSection() {
                 <h3 className="text-base sm:text-lg font-serif font-bold text-[#E5BE38]">
                   DIU AI Innovation Hackathon 2026 — Champion Award Ceremony
                 </h3>
-                <p className="text-xs text-[#A69C93]">AURA-Cluster Evidential Failure Prevention System</p>
+                <p className="text-xs text-[#A69C93]">NeuralSched GPU-Cluster Intelligence Middleware — Team ShadowForge</p>
               </div>
               <button
                 onClick={() => setPhotoModalOpen(false)}

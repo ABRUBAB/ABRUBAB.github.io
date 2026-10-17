@@ -25,6 +25,8 @@ import {
   GraduationCap,
   FileText
 } from "lucide-react";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { BorderBeam } from "@/components/ui/BorderBeam";
 
 export default function Home() {
   const { isReviewerMode, toggleReviewerMode } = useReviewerMode();
@@ -56,10 +58,15 @@ export default function Home() {
             onOpenContact={() => setContactModalOpen(true)}
           />
 
-          {/* Section 1: Morphic Biography & Vision Hook */}
+          {/* Section 1: Morphic Biography & Vision Hook with Backlit UI / Kokonut UI Spotlight */}
           <section className="py-16 sm:py-20 relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#151316]/90 via-[#110F13]/90 to-[#151316]/90 border border-[#D4AF37]/35 backdrop-blur-xl shadow-2xl space-y-6">
+              <SpotlightCard
+                spotlightColor="rgba(212, 175, 55, 0.14)"
+                borderColor="rgba(212, 175, 55, 0.4)"
+                className="p-8 sm:p-12 shadow-2xl space-y-6 bg-gradient-to-b from-[#151316]/95 via-[#110F13]/95 to-[#151316]/95 border-[#D4AF37]/40"
+              >
+                <BorderBeam size={280} duration={14} colorFrom="#D4AF37" colorTo="#6E1423" />
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/10">
                   <div className="space-y-2">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6E1423]/35 border border-[#6E1423]/80 text-xs font-semibold text-[#EDE7DD]">
@@ -110,7 +117,7 @@ export default function Home() {
                     <span className="text-[11px] text-[#A69C93] block">DIU GPU Cluster Platform</span>
                   </div>
                 </div>
-              </div>
+              </SpotlightCard>
             </div>
           </section>
 
