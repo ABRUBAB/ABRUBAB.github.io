@@ -20,17 +20,25 @@ export const profileData: ProfileData = {
       degree: "B.Sc. in Computer Science & Engineering",
       institution: "Daffodil International University (DIU)",
       period: "2023 – Present (Final Year)",
-      cgpa: "3.84 / 4.00",
+      cgpa: "3.80 / 4.00",
       gradeType: "CGPA",
       notes: "Research Track, Dean's Honor Roll. Team Lead at DIU GPU Infrastructure Platform, Research Associate at NBTC, and Member at HIRL."
     },
     {
       degree: "Higher Secondary Certificate (HSC) — Science",
       institution: "B.A.F. Shaheen College Kurmitola",
-      period: "2019 – 2021",
+      period: "2018 – 2020",
       cgpa: "5.00 / 5.00",
       gradeType: "GPA",
       notes: "Academic Excellence Award; Executive Committee Member of IT Club & Atomic Science Club."
+    },
+    {
+      degree: "Dakhil Certificate (SSC Equivalent) — Science",
+      institution: "Tanjimul Ummah Alim Madrasah",
+      period: "2016 – 2018",
+      cgpa: "5.00 / 5.00",
+      gradeType: "GPA",
+      notes: "Academic Excellence, Mathematics & Natural Sciences Focus."
     }
   ],
   contacts: {
@@ -46,8 +54,8 @@ export const profileData: ProfileData = {
   stats: {
     publicationsCount: 7,
     topTierCount: 4,
-    hackathonWins: 1,
-    cgpa: "3.84"
+    hackathonWins: 2,
+    cgpa: "3.80"
   }
 };
 
@@ -306,6 +314,77 @@ export const publications: Publication[] = [
 
 export const flagshipProjects: Project[] = [
   {
+    id: "neuralsched",
+    title: "NeuralSched",
+    subtitle: "GPU-Cluster Intelligence Middleware — 1st Place Champion, AI Hackathon 2026",
+    description: "Middleware sitting above Kubernetes / SLURM using four trained ML models for intelligent job placement, carbon-aware scheduling, and failure prevention.",
+    longDescription: "Features GraphSAGE GNN + PPO for job placement, a carbon-aware LSTM for green scheduling, a Temporal Convolutional Network (TCN) with SHAP for node-failure forecasting, and an LSTM for GPU utilization forecasting. Performs automated checkpoint-and-migrate 45 minutes before critical hardware crashes.",
+    tags: ["GraphSAGE GNN", "PPO RL", "TCN Failure Prediction", "Kubernetes / SLURM", "PyTorch"],
+    methods: ["GraphSAGE GNN Job Placement", "Carbon-Aware Green Scheduling", "TCN Node Failure Forecasting", "Zero-Loss Checkpoint Migration"],
+    results: [
+      { label: "Hackathon Result", value: "1st Place", sublabel: "DIU AI Innovation Hackathon 2026" },
+      { label: "Pre-Crash Warning", value: "45 mins", sublabel: "Lead Time for Checkpoint Migration" },
+      { label: "False Alarm Reduction", value: "64%", sublabel: "Governed by Evidence Thresholds" }
+    ],
+    award: "Champion (1st Place) — DIU AI Innovation Hackathon 2026",
+    github: "https://github.com/ABRUBAB/neuralsched",
+    visualType: "cluster",
+    featured: true
+  },
+  {
+    id: "brain-tumor-mri",
+    title: "Brain Tumor MRI Classification",
+    subtitle: "Multi-Scale Ensemble with Clinician-Facing Grad-CAM++ (Live Web Demo)",
+    description: "Production-ready PyTorch neuro-oncology pipeline with Grad-CAM++ heatmaps, test-time augmentation, and multi-lingual clinical deployment.",
+    longDescription: "Ensemble of ConvNeXt, Vision Transformer (ViT-B/16), and EfficientNetV2 for four-class brain MRI classification (glioma, meningioma, pituitary, no tumor). Provides confidence intervals and Grad-CAM++ anatomical activation maps matching neurosurgical boundaries. Deployed on Hugging Face Spaces in English, Bengali, and Spanish.",
+    tags: ["ConvNeXt", "Vision Transformer", "Grad-CAM++", "Hugging Face Spaces", "PyTorch"],
+    methods: ["DenseNet & ResNet Teacher Ensemble", "Multi-Scale Knowledge Distillation", "Grad-CAM++ Tumor Boundary Maps", "FastAPI & Gradio Serving"],
+    results: [
+      { label: "Diagnostic Accuracy", value: "96.8%", sublabel: "Test Set Accuracy on 4 Classes" },
+      { label: "Inference Latency", value: "14ms", sublabel: "Per Scan on Single GPU" },
+      { label: "Deployment", value: "Hugging Face", sublabel: "Live Tri-Lingual Web App" }
+    ],
+    github: "https://github.com/ABRUBAB/brain-tumor-mri-classification",
+    demoUrl: "https://huggingface.co/spaces/ABRUBAB/brain-tumor-classifier",
+    visualType: "gradcam",
+    featured: true
+  },
+  {
+    id: "researchforge-ai",
+    title: "ResearchForge-AI",
+    subtitle: "End-to-End Multi-Agent Research System with 13 Specialized LLM Agents",
+    description: "Autonomous multi-agent orchestration framework for literature synthesis, mathematical formalization verification, and automated experiment runs.",
+    longDescription: "Coordinates 13 specialized AI agents in three distinct phases: literature review and hypothesis generation, architecture debate and theoretical validation, and code generation with automated Kaggle experiment execution.",
+    tags: ["Multi-Agent AI", "13 AI Agents", "LangChain / RAG", "Kaggle Automation", "LaTeX Synthesis"],
+    methods: ["Hierarchical Agent Supervision", "Dense Vector Semantic Retrieval", "BibTeX Cross-Validation", "Automated Kaggle Execution"],
+    results: [
+      { label: "Drafting Speedup", value: "4.5x", sublabel: "Formalization & Literature Review" },
+      { label: "Citation Precision", value: "99.2%", sublabel: "Verified Cross-Ref DOIs" },
+      { label: "Specialized Agents", value: "13 Agents", sublabel: "3-Phase Pipeline Architecture" }
+    ],
+    github: "https://github.com/ABRUBAB/ResearchForge-AI",
+    visualType: "agent",
+    featured: true
+  },
+  {
+    id: "uvera",
+    title: "UVERA",
+    subtitle: "Editorial Multi-Modal Risk & Fraud Prevention — 4th Place, AI DEV FEST 2026",
+    description: "A 3-layer trust field architecture for multi-modal risk and fraud prevention with calm state transitions and real-time transaction holding.",
+    longDescription: "Engineered during the AI DEV FEST 2026 Hackathon. Features a 3-layer trust field where high-risk anomalies trigger an instant pause ring, mitigating scam payments mid-edge while preserving legitimate user velocity.",
+    tags: ["Risk AI", "Trust Field", "Hackathon Finalist", "Editorial UI", "FastAPI"],
+    methods: ["3-Layer Trust Field", "Calm State Transitions", "Mid-Edge Pause Ring", "Real-Time Scoring"],
+    results: [
+      { label: "Hackathon Placement", value: "4th Place", sublabel: "AI DEV FEST 2026 AI Hackathon" },
+      { label: "Evaluation Speed", value: "<18ms", sublabel: "Real-Time Transaction Scoring" },
+      { label: "Intervention", value: "Pause Ring", sublabel: "Zero False-Block User Friction" }
+    ],
+    award: "4th Place — AI DEV FEST 2026 AI Hackathon",
+    github: "https://github.com/ABRUBAB",
+    visualType: "architecture",
+    featured: true
+  },
+  {
     id: "healthsentinel",
     title: "HealthSentinel AI",
     subtitle: "Federated Tri-Modal Diagnostic Platform for Low-Resource Healthcare",
@@ -320,75 +399,6 @@ export const flagshipProjects: Project[] = [
     ],
     github: "https://github.com/ABRUBAB",
     visualType: "architecture",
-    featured: true
-  },
-  {
-    id: "brain-tumor-mri",
-    title: "AI-Powered Brain Tumor MRI Classification",
-    subtitle: "Multi-Scale Ensemble with Clinician-Facing Explainability",
-    description: "Production-ready PyTorch neuro-oncology pipeline with Grad-CAM visual heatmaps, uncertainty bounds, and automated radiological reporting.",
-    longDescription: "Trained on comprehensive MRI sequences (T1, T1Gd, T2, FLAIR) to classify gliomas, meningiomas, and pituitary tumors. Provides clinicians with confidence intervals derived from Monte Carlo dropout and attention-guided activation maps matching neurosurgical margins.",
-    tags: ["PyTorch", "Grad-CAM", "Brain Tumor", "Medical Imaging", "MC Dropout"],
-    methods: ["DenseNet & ResNet Teacher Ensemble", "Multi-Scale Knowledge Distillation", "Grad-CAM & SHAP Heatmaps", "FastAPI Serving"],
-    results: [
-      { label: "Diagnostic Accuracy", value: "96.8%", sublabel: "Test Set Accuracy" },
-      { label: "Inference Latency", value: "14ms", sublabel: "Per Scan on Single T4 GPU" },
-      { label: "Neurosurgical Agreement", value: "92.3%", sublabel: "Grad-CAM Boundary Overlap" }
-    ],
-    github: "https://github.com/ABRUBAB/brain-tumor-mri-classification",
-    visualType: "gradcam",
-    featured: true
-  },
-  {
-    id: "aura-cluster",
-    title: "AURA-Cluster",
-    subtitle: "Evidential AI for Proactive GPU Failure Prediction — Hackathon Winner",
-    description: "Real-time telemetry forecasting system for distributed deep learning clusters using evidential neural networks. Won 1st Place at DIU AI Innovation Hackathon 2026.",
-    longDescription: "Monitors hardware health metrics (VRAM thermals, PCIe bus errors, power draw spikes, kernel timeout anomalies) to predict node failure 45 minutes before critical training job crash. Allows zero-loss checkpoint offloading.",
-    tags: ["Evidential DL", "Distributed Systems", "GPU Telemetry", "Hackathon Champion", "PyTorch"],
-    methods: ["Dirichlet Evidence Time-Series", "Proactive Checkpoint Migration", "Prometheus & DCGM Telemetry Integration"],
-    results: [
-      { label: "Hackathon Result", value: "1st Place", sublabel: "DIU AI Innovation Hackathon 2026" },
-      { label: "Crash Lead Time", value: "45 mins", sublabel: "Pre-Failure Alert Window" },
-      { label: "False Alarm Reduction", value: "64%", sublabel: "Governed by Evidence Thresholds" }
-    ],
-    award: "Winner — DIU AI Innovation Hackathon 2026",
-    github: "https://github.com/ABRUBAB",
-    visualType: "cluster",
-    featured: true
-  },
-  {
-    id: "diu-gpu-platform",
-    title: "DIU Distributed AI Infrastructure Platform",
-    subtitle: "Campus-Wide GPU Pooling & High-Performance Compute Orchestration",
-    description: "Team Lead & AI/ML Backend Developer for the initiative connecting and pooling DIU's campus GPU resources into an elastic compute cloud.",
-    longDescription: "Presented directly to DIU's Chairman and executive university leadership. Architected custom Slurm/Kubernetes scheduling middleware with automatic job batching, fair-share queue allocation, and low-latency dataset caching for student and faculty research laboratories.",
-    tags: ["Distributed Compute", "Kubernetes", "Slurm", "System Architecture", "Backend Engineering"],
-    methods: ["Dynamic GPU Virtualization", "Priority Queue Scheduler", "Slurm & Prometheus Integration", "Secure Multi-Tenancy"],
-    results: [
-      { label: "Campus Impact", value: "DIU-Wide", sublabel: "Shared Research Infrastructure" },
-      { label: "Utilization Boost", value: "3.2x", sublabel: "Over Isolated Desktop Rigs" },
-      { label: "Executive Backing", value: "Chairman Deck", sublabel: "Presented to Senior Leadership" }
-    ],
-    github: "https://github.com/ABRUBAB",
-    visualType: "cluster",
-    featured: true
-  },
-  {
-    id: "researchforge-ai",
-    title: "ResearchForge-AI",
-    subtitle: "Multi-Agent System for High-Impact Q1 Academic Workflows",
-    description: "Autonomous multi-agent orchestration framework for literature synthesis, mathematical formalization verification, and experiment tracking.",
-    longDescription: "Coordinates specialized LLM agents (Literature Reviewer, Mathematical Prover, Code Auditor, LaTeX Generator) to rigorously accelerate the preparation of scientific manuscripts targeting top IEEE and Elsevier journals.",
-    tags: ["Multi-Agent AI", "LangChain", "RAG", "Scientific Computing", "LaTeX Automation"],
-    methods: ["Hierarchical Agent Supervision", "Dense Vector Semantic Retrieval", "BibTeX Cross-Validation", "Automated Reproducibility Testing"],
-    results: [
-      { label: "Workflow Speedup", value: "4.5x", sublabel: "Drafting & Formalization Cycle" },
-      { label: "Citation Precision", value: "99.2%", sublabel: "Zero Hallucinated DOIs via Cross-Ref" },
-      { label: "Architecture", value: "Multi-Agent", sublabel: "Orchestrated via LangGraph" }
-    ],
-    github: "https://github.com/ABRUBAB/ResearchForge-AI",
-    visualType: "agent",
     featured: true
   }
 ];
@@ -467,13 +477,24 @@ export const awardsAndLeadership: AwardItem[] = [
     id: "hackathon-2026",
     title: "Champion / 1st Place Winner",
     event: "DIU AI Innovation Hackathon 2026",
-    issuer: "Daffodil International University",
+    issuer: "Daffodil International University & World AI Alliance (WAA)",
     year: "2026",
-    details: "Awarded 1st place among 50+ competing engineering teams for 'AURA-Cluster', an evidential deep learning system for predictive GPU telemetry failure prevention.",
+    details: "Awarded 1st place among 50+ competing engineering teams for 'NeuralSched', an evidential deep learning system for predictive GPU telemetry failure prevention and proactive checkpointing.",
     category: "hackathon",
     highlight: true,
     image: "/assets/photos/hackathon_win_photo.jpg",
     badgeText: "1st Place Winner"
+  },
+  {
+    id: "aidevfest-2026",
+    title: "4th Place Finalist",
+    event: "AI DEV FEST 2026 AI Hackathon",
+    issuer: "AI DEV FEST",
+    year: "2026",
+    details: "Built UVERA, an editorial multi-modal risk and fraud prevention architecture featuring a 3-layer trust field that halts fraudulent transactions in real-time.",
+    category: "hackathon",
+    highlight: true,
+    badgeText: "4th Place Finalist"
   },
   {
     id: "bkash-datathon",
@@ -637,9 +658,10 @@ export const skillCategories: SkillCategory[] = [
   {
     category: "Spoken Languages",
     items: [
-      { name: "Bengali", level: "Expert", note: "Native proficiency" },
-      { name: "English", level: "Expert", note: "Professional working / academic proficiency" },
-      { name: "Hindi", level: "Proficient", note: "Conversational" }
+      { name: "Bengali", level: "Expert", note: "Native proficiency (C2)" },
+      { name: "English", level: "Expert", note: "Academic & Research proficiency (C1)" },
+      { name: "Hindi", level: "Proficient", note: "Independent conversational (B1)" },
+      { name: "Spanish", level: "Working", note: "Elementary proficiency (A2)" }
     ]
   }
 ];

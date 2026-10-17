@@ -73,7 +73,7 @@ export default function ExperiencePage() {
               {/* Header: Logo, Title, Org & Period */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
                 <div className="flex items-start gap-4">
-                  <div className="relative w-12 h-12 rounded-2xl overflow-hidden bg-[#0B0A0C] border border-[#D4AF37]/40 shrink-0 p-1">
+                  <div className="relative w-12 h-12 rounded-2xl overflow-hidden bg-white/10 border-2 border-[#D4AF37]/60 shadow-md shrink-0 p-1">
                     <Image
                       src={role.logo || "/assets/logos/website_logo.png"}
                       alt={role.organization}

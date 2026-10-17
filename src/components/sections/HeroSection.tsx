@@ -51,7 +51,7 @@ export function HeroSection({ onToggleReviewerMode, onOpenContact }: HeroSection
             {/* Status Pill */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#151316] border border-[#6E1423]/80 text-xs font-medium text-[#EDE7DD] shadow-lg">
               <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-ping" />
-              <span>B.Sc. CSE Final Year (CGPA 3.84/4.00) • DIU • NBTC (RA) • HIRL</span>
+              <span>B.Sc. CSE Final Year (CGPA 3.80/4.00) • DIU • NBTC (RA) • HIRL</span>
             </div>
 
             {/* Main Headline */}

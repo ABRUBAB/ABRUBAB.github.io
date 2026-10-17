@@ -345,7 +345,7 @@ export function HeroParticleAvatar() {
 
         {/* Floating Telemetry Badge 3 (Middle Left) */}
         <div
-          className="absolute top-1/3 -left-10 px-3 py-1 rounded-xl bg-[#0B0A0C]/95 border border-white/10 backdrop-blur-md text-[11px] font-mono text-[#A69C93] shadow-2xl flex items-center gap-1.5 pointer-events-none hidden sm:flex"
+          className="absolute top-1/3 -left-3 sm:-left-4 px-3 py-1 rounded-xl bg-[#0B0A0C]/95 border border-white/10 backdrop-blur-md text-[11px] font-mono text-[#A69C93] shadow-2xl flex items-center gap-1.5 pointer-events-none hidden sm:flex"
           style={{ transform: "translateZ(25px)" }}
         >
           <Cpu className="w-3 h-3 text-[#D4AF37]" />

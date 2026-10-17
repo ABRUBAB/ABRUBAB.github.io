@@ -79,7 +79,7 @@ export function AboutSection({ onOpenContact }: { onOpenContact: () => void }) {
                   </h4>
                 </div>
                 <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#D4AF37]/15 text-[#E5BE38] border border-[#D4AF37]/40">
-                  CGPA: 3.84 / 4.00
+                  CGPA: 3.80 / 4.00
                 </span>
               </div>
 

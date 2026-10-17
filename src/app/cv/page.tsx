@@ -13,7 +13,8 @@ import {
   Printer, 
   ArrowLeft, 
   Mail, 
-  Globe
+  Globe,
+  Download
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon, ResearchGateIcon, OrcidIcon } from "@/components/ui/BrandIcons";
 
@@ -35,12 +36,21 @@ export default function AcademicCVPage() {
         </Link>
 
         <div className="flex items-center gap-3">
+          <a
+            href="/Rubab_CV_1.pdf"
+            download="Abdullah_Rubab_Europass_CV.pdf"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#D4AF37]/15 hover:bg-[#D4AF37]/25 text-xs font-semibold text-[#E5BE38] border border-[#D4AF37]/40 transition-all shadow-md active:scale-95"
+          >
+            <Download className="w-4 h-4 text-[#D4AF37]" />
+            <span>Download Official PDF</span>
+          </a>
+
           <button
             onClick={handlePrint}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#6E1423] hover:bg-[#8E1C30] text-xs font-semibold text-white transition-all shadow-md active:scale-95 border border-[#8E1C30]"
           >
             <Printer className="w-4 h-4 text-[#D4AF37]" />
-            <span>Print / Save as PDF</span>
+            <span>Print View</span>
           </button>
         </div>
       </div>

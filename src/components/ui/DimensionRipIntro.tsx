@@ -14,6 +14,17 @@ export function DimensionRipIntro({ onComplete }: DimensionRipIntroProps) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    // Check if user already saw the intro in this session or prefers reduced motion
+    if (typeof window !== "undefined") {
+      const alreadySeen = sessionStorage.getItem("abrubab_intro_breached");
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (alreadySeen || prefersReduced) {
+        setIsVisible(false);
+        if (onComplete) onComplete();
+        return;
+      }
+    }
+
     // Fast telemetry boot progression
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -24,10 +35,10 @@ export function DimensionRipIntro({ onComplete }: DimensionRipIntroProps) {
         const next = prev + Math.floor(Math.random() * 14) + 7;
         return next > 100 ? 100 : next;
       });
-    }, 110);
+    }, 90);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [onComplete]);
 
   useEffect(() => {
     if (progress < 25) {
@@ -41,14 +52,17 @@ export function DimensionRipIntro({ onComplete }: DimensionRipIntroProps) {
       // Trigger rip after a small pause
       const ripTimeout = setTimeout(() => {
         setStage("ripping");
-      }, 350);
+      }, 300);
 
       // Finish sequence and unmount
       const completeTimeout = setTimeout(() => {
         setStage("complete");
         setIsVisible(false);
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem("abrubab_intro_breached", "true");
+        }
         if (onComplete) onComplete();
-      }, 1300);
+      }, 1100);
 
       return () => {
         clearTimeout(ripTimeout);
@@ -59,11 +73,14 @@ export function DimensionRipIntro({ onComplete }: DimensionRipIntroProps) {
 
   const handleSkip = () => {
     setStage("ripping");
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("abrubab_intro_breached", "true");
+    }
     setTimeout(() => {
       setStage("complete");
       setIsVisible(false);
       if (onComplete) onComplete();
-    }, 500);
+    }, 400);
   };
 
   if (!isVisible) return null;

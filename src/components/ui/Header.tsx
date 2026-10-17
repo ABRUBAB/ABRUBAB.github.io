@@ -172,7 +172,7 @@ export function Header({ isReviewerMode, onToggleReviewerMode }: HeaderProps) {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-[#0B0A0C]/98 border-b border-[#D4AF37]/30 px-6 py-5 space-y-3 shadow-2xl backdrop-blur-xl animate-fadeIn mt-2">
+          <div className="lg:hidden bg-[#0B0A0C]/98 border-b border-[#D4AF37]/30 px-6 py-5 space-y-3 shadow-2xl backdrop-blur-xl animate-fadeIn mt-2 max-h-[calc(100vh-80px)] overflow-y-auto">
             <div className="flex items-center justify-between pb-2 border-b border-white/10 text-xs font-mono text-[#D4AF37] uppercase tracking-wider">
               <span>Navigation Pages</span>
               <span>Portfolio Menu</span>

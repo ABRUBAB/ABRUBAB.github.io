@@ -128,7 +128,7 @@ export default function AboutPage() {
                   </h3>
                 </div>
                 <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#D4AF37]/15 text-[#E5BE38] border border-[#D4AF37]/40">
-                  CGPA: 3.84 / 4.00
+                  CGPA: 3.80 / 4.00
                 </span>
               </div>
 
@@ -138,7 +138,7 @@ export default function AboutPage() {
                   <GraduationCap className="w-4 h-4 text-[#D4AF37] shrink-0 mt-1" />
                   <div>
                     <strong className="text-[#EDE7DD] block">B.Sc. in Computer Science & Engineering</strong>
-                    <span className="text-[#A69C93]">Daffodil International University (2023 – Present)</span>
+                    <span className="text-[#A69C93]">Daffodil International University (CGPA 3.80 / 4.00, Current)</span>
                   </div>
                 </div>
 
@@ -162,7 +162,7 @@ export default function AboutPage() {
                   <Award className="w-4 h-4 text-[#D4AF37] shrink-0 mt-1" />
                   <div>
                     <strong className="text-[#EDE7DD] block">Competitive Track Record</strong>
-                    <span className="text-[#A69C93]">1st Place AI Hackathon Winner • Rank 48/196 bKash Datathon</span>
+                    <span className="text-[#A69C93]">1st Place AI Hackathon Winner (NeuralSched) • 4th Place AI DEV FEST 2026</span>
                   </div>
                 </div>
               </div>
@@ -196,10 +196,10 @@ export default function AboutPage() {
                 <div className="flex items-center justify-between p-3 rounded-2xl bg-[#0B0A0C] border border-white/5">
                   <div>
                     <strong className="text-[#EDE7DD] block">English</strong>
-                    <span className="text-[#A69C93] text-xs">Academic, Research Writing & Presentation</span>
+                    <span className="text-[#A69C93] text-xs">Academic & Research Writing, Oral Presentation</span>
                   </div>
                   <span className="px-2.5 py-1 rounded-lg bg-[#D4AF37]/15 text-[#E5BE38] text-xs font-mono font-bold">
-                    Proficient (5/5)
+                    C1 (Proficient)
                   </span>
                 </div>
 
@@ -209,7 +209,7 @@ export default function AboutPage() {
                     <span className="text-[#A69C93] text-xs">Native / Mother Tongue</span>
                   </div>
                   <span className="px-2.5 py-1 rounded-lg bg-[#D4AF37]/15 text-[#E5BE38] text-xs font-mono font-bold">
-                    Native (5/5)
+                    C2 (Native)
                   </span>
                 </div>
 
@@ -219,7 +219,17 @@ export default function AboutPage() {
                     <span className="text-[#A69C93] text-xs">Conversational Fluency</span>
                   </div>
                   <span className="px-2.5 py-1 rounded-lg bg-white/10 text-[#EDE7DD] text-xs font-mono font-bold">
-                    Conversational (3/5)
+                    B1 (Independent)
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between p-3 rounded-2xl bg-[#0B0A0C] border border-white/5">
+                  <div>
+                    <strong className="text-[#EDE7DD] block">Spanish</strong>
+                    <span className="text-[#A69C93] text-xs">Elementary / Basic Communication</span>
+                  </div>
+                  <span className="px-2.5 py-1 rounded-lg bg-white/5 text-[#A69C93] text-xs font-mono font-bold">
+                    A2 (Basic)
                   </span>
                 </div>
               </div>

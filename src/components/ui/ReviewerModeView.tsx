@@ -108,7 +108,7 @@ export function ReviewerModeView() {
             </div>
             <div className="text-center md:text-left">
               <span className="block text-2xl font-serif font-bold text-[#EDE7DD]">
-                3.84
+                {profileData.stats.cgpa}
               </span>
               <span className="text-[11px] text-[#A69C93] uppercase tracking-wider">CGPA / 4.0</span>
             </div>

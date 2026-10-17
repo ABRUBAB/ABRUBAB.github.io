@@ -40,11 +40,11 @@ export function RecognitionSection() {
               </h3>
 
               <p className="text-sm sm:text-base text-[#D4AF37] font-semibold">
-                Project: AURA-Cluster (Evidential Deep Learning for GPU Failure Prevention)
+                Winning Project: NeuralSched (GPU-Cluster Intelligence Middleware)
               </p>
 
               <p className="text-xs sm:text-sm text-[#A69C93] leading-relaxed">
-                Awarded First Place out of 50+ university AI engineering teams. Developed a Dirichlet-parameterized telemetry forecasting system providing 45-minute advance warning before catastrophic GPU cluster worker node crashes.
+                Awarded First Place out of 50+ university AI engineering teams. Developed a multi-model telemetry forecasting system providing 45-minute advance warning before catastrophic GPU cluster worker node crashes.
               </p>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">
