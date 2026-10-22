@@ -265,6 +265,29 @@
   .orbit {
     animation: orbit var(--orbit, 24s) linear infinite;
   }
+  /* the hero's looping motion stops while it is off-screen */
+  #top[data-offscreen] *,
+  #top[data-offscreen] *::before {
+    animation-play-state: paused !important;
+  }
+
+  /* a thin band of light sweeping down the disc, like a slice through a scan */
+  @keyframes scan {
+    0% {
+      transform: translateY(-120%);
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    88% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(420%);
+      opacity: 0;
+    }
+  }
 
   @keyframes scroll-cue {
     from {

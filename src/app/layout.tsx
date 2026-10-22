@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/providers/Providers";
-import { profile, socials } from "@/content/data";
+import { papers, profile, socials } from "@/content/data";
 
 const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"], display: "swap" });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], display: "swap" });
@@ -56,19 +56,34 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const personLd = {
-  "@context": "https://schema.org",
+const person = {
   "@type": "Person",
+  "@id": `${profile.site}/#person`,
   name: profile.name,
   url: profile.site,
-  image: `${profile.site}/assets/photos/portrait-lit.webp`,
+  image: `${profile.site}/assets/photos/portrait-card.jpg`,
   jobTitle: "AI researcher & engineer",
   email: `mailto:${profile.email}`,
   address: { "@type": "PostalAddress", addressLocality: "Dhaka", addressCountry: "BD" },
   alumniOf: { "@type": "CollegeOrUniversity", name: "Daffodil International University" },
-  knowsAbout: ["Medical image analysis", "Deep learning", "Uncertainty quantification", "Explainable AI"],
+  knowsAbout: ["Medical image analysis", "Deep learning", "Uncertainty quantification", "Explainable AI", "Knowledge distillation"],
+  knowsLanguage: ["Bengali", "English", "Hindi", "Spanish"],
   sameAs: socials.map((s) => s.href),
 };
+
+// only work that has actually been published or presented
+const articles = papers
+  .filter((p) => p.status === "published" || p.status === "presented")
+  .map((p) => ({
+    "@type": "ScholarlyArticle",
+    headline: p.full,
+    datePublished: String(p.year),
+    isPartOf: { "@type": "Periodical", name: p.venueFull },
+    author: { "@id": `${profile.site}/#person` },
+    ...(p.doi ? { url: p.doi, sameAs: p.doi } : {}),
+  }));
+
+const personLd = { "@context": "https://schema.org", "@graph": [person, ...articles] };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -79,7 +94,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd).replace(/</g, "\\u003c") }}
         />
         <noscript>
-          <style>{`#loader{display:none!important}.reveal,#top *{opacity:1!important;transform:none!important}`}</style>
+          <style>{`#loader{display:none!important}.reveal,#top *,.sheet,h1 [style],h2 [style],[style*="opacity:0"],[style*="opacity: 0"],[style*="scaleX(0)"],[style*="scaleY(0)"]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
         <Providers>{children}</Providers>
       </body>

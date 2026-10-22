@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { profile, projects, socials } from "@/content/data";
+import { papers, profile, projects, socials } from "@/content/data";
 import { EASE_OUT, lockScroll, scrollToId } from "@/lib/scroll";
 import { cn } from "@/lib/cn";
 import { ArrowRight, ArrowUpRight, Copy, Download, Mail, Search } from "@/components/ui/Icons";
@@ -44,11 +44,23 @@ export default function CommandPalette() {
       run: () => scrollToId(id),
     });
     return [
-      nav("work", "Work"),
-      nav("research", "Research"),
-      nav("journey", "Journey"),
-      nav("beyond", "Beyond the lab"),
+      nav("projects", "Projects"),
+      nav("publications", "Publications"),
+      nav("experience", "Experience"),
+      nav("achievements", "Achievements"),
+      nav("education", "Education"),
+      nav("skills", "Skills & languages"),
+      nav("activities", "Extracurricular activities"),
       nav("contact", "Contact"),
+      ...papers.map<Item>((p) => ({
+        id: `paper-${p.id}`,
+        group: "Publications",
+        label: p.title,
+        hint: p.venue,
+        keywords: `${p.full} ${p.ideas.join(" ")} paper`,
+        icon: <ArrowRight width={16} height={16} />,
+        run: () => void window.dispatchEvent(new CustomEvent("paper:open", { detail: p.id })),
+      })),
       ...projects.map<Item>((p) => ({
         id: `live-${p.id}`,
         group: "Live projects",

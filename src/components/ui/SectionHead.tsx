@@ -9,6 +9,7 @@ import SplitWords from "./SplitWords";
  */
 export default function SectionHead({
   label,
+  index,
   lead,
   accent,
   accentClass,
@@ -16,7 +17,9 @@ export default function SectionHead({
   aside,
 }: {
   label: string;
-  lead: string;
+  /** "01" … shown quietly before the label */
+  index?: string;
+  lead?: string;
   accent: string;
   accentClass: string;
   tone?: "dark" | "light";
@@ -29,15 +32,20 @@ export default function SectionHead({
         <Reveal>
           <p className={cn("label flex items-center gap-3", light && "text-ash-500")}>
             <span className={cn("h-px w-8 bg-gradient-to-r to-transparent", light ? "from-ink" : "from-cobalt-400")} />
+            {index && <span className="opacity-50">{index} /</span>}
             {label}
           </p>
         </Reveal>
         <h2 className={cn("display mt-5 text-[clamp(2.8rem,7.4vw,6.4rem)]", light ? "text-ink" : "text-ash-50")}>
-          <SplitWords text={lead} inView />{" "}
+          {lead && (
+            <>
+              <SplitWords text={lead} inView />{" "}
+            </>
+          )}
           <SplitWords
             text={accent}
             inView
-            delay={0.22}
+            delay={lead ? 0.22 : 0}
             wordClassName={() => cn("serif-italic pr-[0.06em] text-[1.04em]", accentClass)}
           />
         </h2>

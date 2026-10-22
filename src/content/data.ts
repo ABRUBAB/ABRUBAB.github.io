@@ -157,6 +157,18 @@ export interface Paper {
   glyph: GlyphKind;
   doi?: string;
   code?: string;
+  /** shown in the detail view */
+  venueFull: string;
+  publisher?: string;
+  pages?: string;
+  /** exact wording for the status, with dates where the CV gives them */
+  statusNote: string;
+  authors: string;
+  /** supervisor / collaborator */
+  with?: string;
+  /** plain-English summary, written from the abstract or the public repository */
+  summary: string;
+  ideas: string[];
 }
 
 export const statusMeta: Record<PaperStatus, { label: string; color: string }> = {
@@ -173,89 +185,146 @@ export const papers: Paper[] = [
     title: "Cactus ViT",
     full: "Sample-Efficient Fine-Grained Classification of Cactus Species Using Hybrid Vision Transformers and Knowledge Distillation",
     venue: "IEEE ICCIT 2025",
+    venueFull: "2025 28th International Conference on Computer and Information Technology (ICCIT)",
+    publisher: "IEEE",
+    pages: "pp. 4837–4842",
     year: 2025,
     status: "published",
+    statusNote: "Published",
     role: "First author",
+    authors: "A. Rubab, M. T. Hasan",
     glyph: "vit",
     doi: "https://doi.org/10.1109/ICCIT68739.2025.11491549",
+    summary:
+      "Telling look-alike species apart is hard when there are few labelled photos. This paper builds a compact pipeline for cactus classification: a hybrid CNN–Vision Transformer teacher, pre-trained with a masked autoencoder, is distilled into a lightweight MobileViT student. Over three seeded runs the student reaches 99.4% accuracy with only a third of the teacher’s parameters.",
+    ideas: ["Hybrid CNN–ViT", "Masked-autoencoder pre-training", "Knowledge distillation", "MobileViT", "Fine-grained recognition"],
   },
   {
     id: "braindistill",
     title: "BrainDistill",
     full: "Explainable Multi-Scale Knowledge Distillation with Uncertainty-Aware Inference for Efficient Brain Tumor MRI Classification",
     venue: "IEEE BECITHCON 2026",
+    venueFull: "International Conference on Biomedical Engineering, Computer and Information Technology for Health (BECITHCON 2026) · IUBAT, Dhaka",
     year: 2026,
     status: "presented",
+    statusNote: "Accepted and presented, 4–5 September 2026 · proceedings forthcoming",
     role: "First author",
+    authors: "A. Rubab et al.",
     glyph: "mri",
+    summary:
+      "Large MRI classifiers are accurate but heavy. BrainDistill passes what a big model knows, at several feature scales, into a compact brain-tumour classifier, then explains its predictions and reports how uncertain it is on each scan.",
+    ideas: ["Knowledge distillation", "Multi-scale features", "Explainable AI", "Uncertainty-aware inference", "Brain MRI"],
   },
   {
     id: "light-bloodnet",
     title: "Light-BloodNet",
     full: "An Efficient Attention-Guided Deep Learning Framework with Explainability for Blood Cell Classification",
     venue: "IEEE BECITHCON 2026",
+    venueFull: "International Conference on Biomedical Engineering, Computer and Information Technology for Health (BECITHCON 2026) · IUBAT, Dhaka",
     year: 2026,
     status: "presented",
+    statusNote: "Accepted and presented, 4–5 September 2026 · proceedings forthcoming",
     role: "First author",
+    authors: "A. Rubab et al.",
     glyph: "cells",
+    summary:
+      "A lightweight, attention-guided network for classifying blood-cell images. Attention steers the model toward the informative parts of each cell so it can stay small and fast, and explanations show what it looked at.",
+    ideas: ["Attention-guided CNN", "Blood-cell classification", "Explainability", "Efficiency"],
   },
   {
     id: "ur-protonet",
     title: "UR-ProtoNet",
     full: "UR-ProtoNet: Evidential Retrieval-Augmented Prototypical Networks for Uncertainty-Aware Few-Shot Chest X-Ray Classification Across Domain Shifts",
     venue: "Intelligence-Based Medicine · Elsevier",
+    venueFull: "Intelligence-Based Medicine",
+    publisher: "Elsevier",
     year: 2026,
     status: "review",
+    statusNote: "Submitted · under review",
     role: "First author",
+    authors: "A. Rubab et al.",
     glyph: "xray",
     code: "https://github.com/ABRUBAB/UR-ProtoNet",
+    summary:
+      "With only a handful of labelled chest X-rays, class prototypes are unstable, and models fail silently when a new hospital’s images look different. UR-ProtoNet retrieves matching examples from a curated memory bank, blends them with the few-shot prototypes through a learned gate, and returns an uncertainty score with every prediction, so it can say when it does not know.",
+    ideas: ["Few-shot learning", "Retrieval memory", "Evidential deep learning", "Chest X-ray", "Domain shift"],
   },
   {
     id: "tace-hcc",
     title: "TACE response in HCC",
     full: "A Multimodal 3D Peritumoral Representation Learning Framework for Predicting Chemoembolization Resistance in Hepatocellular Carcinoma: An International Multi-Cohort Validation",
     venue: "Briefings in Bioinformatics · OUP",
+    venueFull: "Briefings in Bioinformatics",
+    publisher: "Oxford University Press",
     year: 2026,
     status: "review",
+    statusNote: "Submitted · under review · NBTC project",
     role: "Co-author",
+    authors: "NanoBio Technology Center (NBTC) research team, DIU · A. Rubab, co-author",
+    with: "Dr. Md. Ali Hossain · Director, NBTC",
     glyph: "liver",
+    summary:
+      "Chemoembolization (TACE) does not work for every liver-cancer patient. This framework learns from 3D imaging of the tissue around the tumour, together with other data modalities, to predict who is likely to resist TACE, and is validated across international cohorts.",
+    ideas: ["3D peritumoral features", "Multimodal learning", "Hepatocellular carcinoma", "TACE response", "Multi-cohort validation"],
   },
   {
     id: "msea-net",
     title: "MSEA-Net",
     full: "MSEA-Net: Uncertainty-Governed Selective Diagnosis through Multi-Scale Evidential Attention for Gastrointestinal Endoscopy",
     venue: "Elsevier journal · planned",
+    venueFull: "Elsevier journal · submission planned",
+    publisher: "Elsevier",
     year: 2026,
     status: "ready",
+    statusNote: "Manuscript complete · submission planned",
     role: "First author",
+    authors: "A. Rubab et al.",
+    with: "Dr. Md. Zahid Hasan · Director, HIRL",
     glyph: "gut",
     code: "https://github.com/ABRUBAB/MSEA-Net",
+    summary:
+      "An endoscopy classifier that knows when to defer. Multi-scale attention and gated feature fusion feed an evidential head that outputs an uncertainty with every prediction; the most uncertain frames are handed to a clinician instead of guessed, with conformal calibration behind the confidence.",
+    ideas: ["Multi-scale attention", "Evidential learning", "Conformal calibration", "Selective prediction", "GI endoscopy"],
   },
   {
     id: "ram-vit",
     title: "RAM-ViT",
     full: "RAM-ViT: Retrieval-Augmented Evidential Vision Transformer for Cross-Modal Glioma Grading",
     venue: "DIU-DoR Poster 2026",
+    venueFull: "Presented as a poster at the DIU-DoR Annual Poster Presentation 2026 · manuscript in preparation",
     year: 2026,
     status: "preparing",
+    statusNote: "Poster presented · manuscript in preparation",
     role: "First author",
+    authors: "A. Rubab et al.",
+    with: "Dr. Md. Ali Hossain · Director, NBTC",
     glyph: "graph",
     code: "https://github.com/ABRUBAB/ram_vit",
+    summary:
+      "Glioma MRI is read across several sequences, and models rarely say how sure they are. RAM-ViT feeds a frozen Vision Transformer with paired T1-CE and FLAIR slices, retrieves similar labelled examples from a small support memory, fuses the two sequences with cross-attention, and reports calibrated uncertainty so low-confidence slices can be set aside.",
+    ideas: ["Vision Transformer", "Retrieval-augmented", "Cross-modal fusion", "Evidential learning", "Glioma MRI"],
   },
   {
     id: "puma-mil",
     title: "PUMA-MIL",
     full: "PUMA-MIL / PUMA-MIL-Lite: Multimodal Multiple Instance Learning for Glioma Detection with Clinical Interpretability",
     venue: "Manuscript",
+    venueFull: "Manuscript in preparation",
     year: 2026,
     status: "preparing",
+    statusNote: "Manuscript in preparation",
     role: "First author",
+    authors: "A. Rubab et al.",
+    with: "Dr. Md. Ali Hossain · Director, NBTC",
     glyph: "bags",
     code: "https://github.com/ABRUBAB/puma_mil",
+    summary:
+      "Finds tumour-bearing slices in multi-sequence brain MRI by reading each slice in the context of its neighbours. Learned reliability weights decide how much to trust each MRI sequence, a small Transformer models the slice neighbourhood, and prototype-anchored multiple-instance pooling copes with ambiguous boundary slices, with calibrated confidence.",
+    ideas: ["Multiple-instance learning", "Multi-sequence MRI", "Slice context", "Prototype anchoring", "Calibrated confidence"],
   },
 ];
 
-/* ───────────────────────── Journey ───────────────────────── */
+/* ───────────────────────── Experience ───────────────────────── */
 
 export interface Role {
   id: string;
@@ -295,17 +364,17 @@ export const roles: Role[] = [
   },
   {
     id: "gpu",
-    title: "Team Lead · AI/ML & Backend",
-    org: "DIU Distributed GPU Platform",
+    title: "AI/ML Developer & Tester",
+    org: "DIU Distributed AI Infrastructure Platform",
     period: "2025 → now",
     now: true,
     logo: "/assets/logos/diu_logo.svg",
     logoBg: "light",
-    tags: ["Campus GPU pooling", "Presented to DIU leadership"],
+    tags: ["AI/ML", "System testing", "Sustainable energy", "Presented to DIU leadership"],
   },
   {
     id: "keyoon",
-    title: "Lead AI/ML & Backend Developer",
+    title: "AI/ML & Backend Developer",
     org: "Keyoon.com",
     period: "2026 → now",
     now: true,
@@ -315,23 +384,74 @@ export const roles: Role[] = [
   },
 ];
 
-export const education = {
-  degree: "B.Sc. Computer Science & Engineering",
-  school: "Daffodil International University",
-  period: "2023 → now · Final year",
-  cgpa: 3.8,
-  scale: 4,
-  earlier: [
-    { label: "HSC", value: "5.00 / 5.00" },
-    { label: "Dakhil", value: "5.00 / 5.00" },
-  ],
-  languages: [
-    { label: "বাংলা", level: "Native" },
-    { label: "English", level: "C1" },
-    { label: "हिन्दी", level: "B1" },
-    { label: "Español", level: "A2" },
-  ],
-};
+export interface School {
+  id: string;
+  level: string;
+  org: string;
+  place: string;
+  period: string;
+  grade: number;
+  scale: number;
+  gradeLabel: "CGPA" | "GPA";
+  note: string;
+  current?: boolean;
+}
+
+// Newest first, as in the CV.
+export const schools: School[] = [
+  {
+    id: "bsc",
+    level: "B.Sc. in Computer Science & Engineering",
+    org: "Daffodil International University",
+    place: "Daffodil Smart City, Savar, Dhaka",
+    period: "2023 → now",
+    grade: 3.8,
+    scale: 4,
+    gradeLabel: "CGPA",
+    note: "EQF level 6",
+    current: true,
+  },
+  {
+    id: "hsc",
+    level: "Higher Secondary Certificate · Science",
+    org: "B.A.F. Shaheen College Kurmitola",
+    place: "Dhaka",
+    period: "2018 → 2020",
+    grade: 5,
+    scale: 5,
+    gradeLabel: "GPA",
+    note: "Academic Excellence Award",
+  },
+  {
+    id: "dakhil",
+    level: "Dakhil Certificate · Science",
+    org: "Tanjimul Ummah Alim Madrasah",
+    place: "Dhaka",
+    period: "2016 → 2018",
+    grade: 5,
+    scale: 5,
+    gradeLabel: "GPA",
+    note: "SSC equivalent · Bangladesh Madrasah Education Board",
+  },
+];
+
+// CEFR: A1 = 1 … C2 = 6. Levels are the CV's self-assessment for every skill (listening, reading, writing, speaking).
+export interface Language {
+  id: string;
+  lang: string; // BCP 47, for the script
+  name: string;
+  script: string;
+  level: string;
+  step: number;
+  caption: string;
+}
+
+export const languages: Language[] = [
+  { id: "bn", lang: "bn", name: "Bengali", script: "বাংলা", level: "Native", step: 6, caption: "Mother tongue" },
+  { id: "en", lang: "en", name: "English", script: "English", level: "C1", step: 5, caption: "Proficient user" },
+  { id: "hi", lang: "hi", name: "Hindi", script: "हिन्दी", level: "B1", step: 3, caption: "Independent user" },
+  { id: "es", lang: "es", name: "Spanish", script: "Español", level: "A2", step: 2, caption: "Basic user" },
+];
 
 export interface Honour {
   id: string;
@@ -381,20 +501,20 @@ export const honours: Honour[] = [
   { id: "saifur", big: "1st", title: "Saifur's Web Design Competition", sub: "Champion · 2018" },
 ];
 
-/* ───────────────────────── Beyond the lab ───────────────────────── */
+/* ───────────────────────── Extracurricular activities ───────────────────────── */
 
-export type BeyondKind = "contest" | "olympiad" | "expo" | "conference" | "school" | "community" | "kaggle";
+export type ActivityKind = "contest" | "olympiad" | "expo" | "conference" | "school" | "community" | "kaggle";
 
-export interface BeyondItem {
+export interface ActivityItem {
   id: string;
-  kind: BeyondKind;
+  kind: ActivityKind;
   when: string;
   title: string;
   org: string;
   note?: string;
 }
 
-export const beyond: BeyondItem[] = [
+export const activities: ActivityItem[] = [
   {
     id: "cpc",
     kind: "contest",
@@ -450,27 +570,38 @@ export const beyond: BeyondItem[] = [
   },
 ];
 
-/* ───────────────────────── Toolbox ───────────────────────── */
+/* ───────────────────────── Skills ───────────────────────── */
 
-export const toolbox: { group: string; items: string[] }[] = [
+// Straight from the CV's Skills section.
+export const skills: { group: string; items: string[] }[] = [
   {
     group: "Deep learning & medical AI",
     items: [
-      "PyTorch", "TensorFlow", "Keras", "MONAI", "Hugging Face", "Vision Transformers", "Evidential DL",
-      "Uncertainty quantification", "Knowledge distillation", "Few-shot learning", "Federated learning", "RAG",
+      "PyTorch", "TensorFlow", "Keras", "MONAI", "Hugging Face Transformers", "Vision Transformers", "Evidential deep learning",
+      "Uncertainty quantification", "Knowledge distillation", "Few-shot & prototype learning", "Federated learning", "RAG",
       "Medical image classification", "Segmentation",
     ],
   },
   { group: "Explainable AI", items: ["Grad-CAM", "Grad-CAM++", "SHAP", "LIME", "UMAP", "t-SNE"] },
   {
-    group: "ML & data",
-    items: ["scikit-learn", "XGBoost", "LightGBM", "OpenCV", "Albumentations", "Weights & Biases", "Kaggle", "Colab"],
+    group: "ML & data tools",
+    items: ["scikit-learn", "XGBoost", "LightGBM", "OpenCV", "Albumentations", "Weights & Biases", "Kaggle", "Google Colab"],
   },
   {
     group: "Backend & deployment",
-    items: ["FastAPI", "Django", "Docker", "Git / GitHub", "CI/CD", "Gradio", "Hugging Face Spaces"],
+    items: ["FastAPI", "Django", "Docker", "Git", "GitHub", "CI/CD", "Gradio", "Hugging Face Spaces"],
   },
   { group: "Programming", items: ["Python", "C++", "Java", "SQL · MySQL · PostgreSQL", "LaTeX"] },
+  { group: "Office & design", items: ["Microsoft Excel", "Microsoft PowerPoint", "Canva"] },
+];
+
+// The CV's "Personal skills".
+export const strengths: { title: string; line: string }[] = [
+  { title: "Team leadership", line: "Led the winning team at AI Hackathon 2026" },
+  { title: "Contest organising", line: "DIU Computer Programming Club · ACM Wing" },
+  { title: "Research communication", line: "Conference and poster presentations" },
+  { title: "Competitive programming", line: "Data structures and algorithms" },
+  { title: "Kaggle", line: "Medical AI, tabular ML and NLP competitions" },
 ];
 
 // Big-type ticker between hero and work.

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { MotionConfig } from "motion/react";
 import WaterCanvas from "@/components/background/WaterCanvas";
 import Loader from "./Loader";
 import { LoadedContext } from "./LoadedContext";
@@ -11,6 +12,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const [loaded, setLoaded] = useState(!home); // only the home page has a loading screen
 
   return (
+    <MotionConfig reducedMotion="user">
     <LoadedContext.Provider value={loaded}>
       <a
         href="#main"
@@ -22,5 +24,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       {home && <Loader onDone={() => setLoaded(true)} />}
       {children}
     </LoadedContext.Provider>
+    </MotionConfig>
   );
 }

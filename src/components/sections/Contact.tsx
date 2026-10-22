@@ -1,17 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "motion/react";
-import { EASE_OUT } from "@/lib/scroll";
 import { profile, socials } from "@/content/data";
 import { cn } from "@/lib/cn";
 import LiveClock from "@/components/ui/LiveClock";
-import Magnetic from "@/components/ui/Magnetic";
 import Reveal from "@/components/ui/Reveal";
 import SplitWords from "@/components/ui/SplitWords";
+import Sheet from "@/components/ui/Sheet";
 import { ArrowUpRight, Check, Copy, Download, Mail, socialIcon } from "@/components/ui/Icons";
 
-function CopyEmail() {
+/** A compact, single-line email with a copy button — small type on purpose. */
+function EmailPill() {
   const [done, setDone] = useState(false);
 
   const copy = async () => {
@@ -31,133 +30,137 @@ function CopyEmail() {
   };
 
   return (
-    <div className="flex items-center justify-between gap-3 rounded-[28px] bg-ash-50 p-2 pl-6 text-ink shadow-[0_40px_80px_-40px_rgb(7_15_61/0.9)] sm:pl-8">
+    <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-ink/20 bg-ash-50/70 p-1.5 pl-5">
+      <Mail width={17} height={17} className="shrink-0 text-ash-500" />
       <a
         href={`mailto:${profile.email}`}
-        className="group flex min-w-0 items-center gap-4 py-4 text-[clamp(1.05rem,2.6vw,1.9rem)] font-medium tracking-tight"
+        className="min-w-0 truncate px-1 text-[15px] font-medium tracking-tight text-ink underline decoration-ink/20 underline-offset-4 transition-colors hover:decoration-ember-500"
       >
-        <Mail width={24} height={24} className="shrink-0 text-cobalt-600" />
-        <span className="truncate underline decoration-ink/15 decoration-1 underline-offset-[6px] transition-colors group-hover:decoration-cobalt-600">
-          {profile.email}
-        </span>
+        {profile.email}
       </a>
       <button
         type="button"
         onClick={copy}
         aria-label={done ? "Email copied" : "Copy email address"}
         className={cn(
-          "inline-flex h-14 shrink-0 items-center gap-2 rounded-[20px] px-5 text-[14px] font-medium text-ash-50 transition-colors duration-300",
+          "inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-ash-50 transition-colors duration-300",
           done ? "bg-cobalt-600" : "bg-ink hover:bg-cobalt-700",
         )}
       >
-        {done ? <Check width={17} height={17} /> : <Copy width={17} height={17} />}
-        <span className="hidden sm:inline">{done ? "Copied" : "Copy"}</span>
+        {done ? <Check width={15} height={15} /> : <Copy width={15} height={15} />}
+        {done ? "Copied" : "Copy"}
       </button>
     </div>
+  );
+}
+
+function Row({
+  href,
+  label,
+  meta,
+  icon,
+  download,
+  external,
+}: {
+  href: string;
+  label: string;
+  meta?: string;
+  icon: React.ReactNode;
+  download?: boolean;
+  external?: boolean;
+}) {
+  return (
+    <a
+      href={href}
+      download={download}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className="group -mx-3 flex items-center gap-4 rounded-2xl px-3 py-4 transition-colors duration-300 hover:bg-ink hover:text-ash-50"
+    >
+      <span className="grid size-10 shrink-0 place-items-center rounded-full border border-ink/20 text-ink transition-colors duration-300 group-hover:border-white/25 group-hover:text-ember-400">
+        {icon}
+      </span>
+      <span className="flex-1 text-[clamp(1.2rem,1.9vw,1.55rem)] font-medium tracking-[-0.02em]">{label}</span>
+      {meta && <span className="hidden font-mono text-[11px] tracking-wider text-ash-500 sm:block">{meta}</span>}
+      <ArrowUpRight
+        width={19}
+        height={19}
+        className="shrink-0 text-ash-500 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ember-400"
+      />
+    </a>
   );
 }
 
 export default function Contact() {
   return (
     <section id="contact" className="relative py-3 sm:py-5">
-      <motion.div
-        initial={{ opacity: 0, y: 56 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "0px 0px -8% 0px" }}
-        transition={{ duration: 1, ease: EASE_OUT }}
-        className="sheet bg-cobalt-600 text-white"
-      >
-        {/* light from the upper right, depth to the lower left, two slow colour pools */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_80%_at_88%_0%,rgb(111_144_255/0.85),transparent_62%),radial-gradient(80%_90%_at_0%_100%,rgb(7_15_61/0.9),transparent_60%)]" />
-        <div aria-hidden className="pointer-events-none absolute -left-32 top-[10%] size-[520px] rounded-full bg-[radial-gradient(closest-side,rgb(158_182_255/0.32),transparent)]" />
-        <div aria-hidden className="pointer-events-none absolute -bottom-40 right-[8%] size-[480px] rounded-full bg-[radial-gradient(closest-side,rgb(255_90_31/0.3),transparent)]" />
+      <Sheet className="bg-paper text-ink">
+        <div aria-hidden className="bg-paper-grid pointer-events-none absolute inset-0" />
+        {/* one warm bloom, low in the corner */}
+        <div aria-hidden className="pointer-events-none absolute -bottom-56 -right-40 size-[760px] rounded-full bg-[radial-gradient(closest-side,rgb(255_90_31/0.3),transparent)]" />
+        <div aria-hidden className="pointer-events-none absolute -left-48 -top-48 size-[520px] rounded-full bg-[radial-gradient(closest-side,rgb(111_144_255/0.22),transparent)]" />
 
         <div className="section wrap">
           <Reveal>
-            <p className="label flex items-center gap-3 !text-white/70">
-              <span className="h-px w-8 bg-gradient-to-r from-white to-transparent" />
-              Contact
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-3">
+              <p className="label flex items-center gap-3 !text-ash-500">
+                <span className="h-px w-8 bg-gradient-to-r from-ink to-transparent" />
+                <span className="opacity-50">08 /</span>
+                Contact
+              </p>
+              <p className="flex items-center gap-2.5 text-[14px] text-ash-700">
+                <span className="relative grid size-2 place-items-center">
+                  <span className="ping-soft absolute inset-0 rounded-full bg-ember-500" />
+                  <span className="size-1.5 rounded-full bg-ember-500" />
+                </span>
+                {profile.seekingLong}
+              </p>
+            </div>
           </Reveal>
-          <h2 className="display mt-6 text-[clamp(3.6rem,12vw,11rem)] text-white">
+
+          <h2 className="display mt-6 text-[clamp(3.6rem,13vw,12rem)] text-ink">
             <SplitWords text="Let’s" inView />{" "}
             <SplitWords
               text="talk."
               inView
               delay={0.2}
-              wordClassName={() => "serif-italic pr-[0.06em] text-[1.04em] text-ember-400"}
+              wordClassName={() => "serif-italic pr-[0.06em] text-[1.04em] text-ember-500"}
             />
           </h2>
 
-          <div className="mt-12 grid gap-5 lg:mt-16 lg:grid-cols-[1.35fr_1fr] lg:gap-6">
-            <div className="flex flex-col justify-between gap-8">
+          <div className="mt-12 grid gap-12 lg:mt-16 lg:grid-cols-2 lg:gap-20">
+            <div className="flex flex-col gap-7 lg:justify-between">
+              <div className="flex flex-col gap-7">
               <Reveal>
-                <CopyEmail />
+                <p className="max-w-[28rem] text-[clamp(1.05rem,1.5vw,1.25rem)] leading-snug text-ash-700">
+                  Applying for funded MSc programmes, and open to research collaborations. Email is the fastest way to reach me.
+                </p>
               </Reveal>
               <Reveal delay={0.08}>
-                <div className="flex flex-wrap items-center gap-x-8 gap-y-4 px-2 text-[15px] text-white/80">
-                  <span className="flex items-center gap-2.5">
-                    <span className="relative grid size-2 place-items-center">
-                      <span className="ping-soft absolute inset-0 rounded-full bg-ember-400" />
-                      <span className="size-1.5 rounded-full bg-ember-400" />
-                    </span>
-                    {profile.seekingLong}
-                  </span>
-                  <span className="font-mono text-[12px] tracking-wide text-white/70">
-                    {profile.location} · <LiveClock timeZone={profile.timeZone} />
-                  </span>
-                </div>
+                <EmailPill />
               </Reveal>
+              </div>
               <Reveal delay={0.14}>
-                <a
-                  href={`mailto:${profile.academicEmail}`}
-                  className="inline-flex px-2 font-mono text-[12.5px] tracking-wide text-white/60 transition-colors hover:text-white"
-                >
-                  Academic · {profile.academicEmail}
-                </a>
+                <div className="space-y-2 font-mono text-[12px] tracking-wide text-ash-600">
+                  <a href={`mailto:${profile.academicEmail}`} className="block w-fit transition-colors hover:text-ink">
+                    Academic · {profile.academicEmail}
+                  </a>
+                  <p>
+                    {profile.location} · <LiveClock timeZone={profile.timeZone} />
+                  </p>
+                </div>
               </Reveal>
             </div>
 
             <Reveal delay={0.1}>
-              <ul className="overflow-hidden rounded-[28px] bg-ink shadow-[0_40px_80px_-40px_rgb(7_15_61/0.9)]">
+              <ul className="divide-y divide-ink/15 border-y border-ink/15">
                 <li>
-                  <Magnetic strength={0.06} className="block">
-                    <a
-                      href={profile.cv}
-                      download
-                      className="group flex items-center gap-4 border-b border-white/[0.07] px-6 py-5 transition-colors hover:bg-white/[0.045]"
-                    >
-                      <span className="grid size-10 place-items-center rounded-full border border-white/[0.14] text-ash-200 transition-colors group-hover:border-ember-400 group-hover:text-ember-400">
-                        <Download width={17} height={17} />
-                      </span>
-                      <span className="flex-1 text-[16px] font-medium text-ash-50">Curriculum vitae</span>
-                      <span className="font-mono text-[11px] tracking-wider text-ash-500">PDF</span>
-                    </a>
-                  </Magnetic>
+                  <Row href={profile.cv} download label="Curriculum vitae" meta="PDF" icon={<Download width={17} height={17} />} />
                 </li>
-                {socials.map((s, i) => {
+                {socials.map((s) => {
                   const Icon = socialIcon[s.id];
                   return (
                     <li key={s.id}>
-                      <a
-                        href={s.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={cn(
-                          "group flex items-center gap-4 px-6 py-4 transition-colors hover:bg-white/[0.045]",
-                          i < socials.length - 1 && "border-b border-white/[0.07]",
-                        )}
-                      >
-                        <span className="grid size-10 place-items-center rounded-full border border-white/[0.14] text-ash-300 transition-colors group-hover:border-cobalt-400 group-hover:text-cobalt-300">
-                          <Icon width={17} height={17} />
-                        </span>
-                        <span className="flex-1 text-[16px] text-ash-100">{s.label}</span>
-                        <ArrowUpRight
-                          width={17}
-                          height={17}
-                          className="text-ash-500 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
-                        />
-                      </a>
+                      <Row href={s.href} external label={s.label} icon={<Icon width={17} height={17} />} />
                     </li>
                   );
                 })}
@@ -165,7 +168,7 @@ export default function Contact() {
             </Reveal>
           </div>
         </div>
-      </motion.div>
+      </Sheet>
     </section>
   );
 }

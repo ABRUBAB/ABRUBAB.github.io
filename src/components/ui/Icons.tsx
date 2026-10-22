@@ -25,6 +25,16 @@ export const ArrowRight = (p: P) => (
     <path d="M5 12h14M13 6l6 6-6 6" />
   </svg>
 );
+export const ArrowLeft = (p: P) => (
+  <svg {...base(p)}>
+    <path d="M19 12H5M11 6l-6 6 6 6" />
+  </svg>
+);
+export const Plus = (p: P) => (
+  <svg {...base(p)}>
+    <path d="M12 5v14M5 12h14" />
+  </svg>
+);
 export const ArrowDown = (p: P) => (
   <svg {...base(p)}>
     <path d="M12 5v14M6 13l6 6 6-6" />

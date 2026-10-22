@@ -1,7 +1,7 @@
 # Abdullah Rubab — portfolio
 
 Personal site for [abdullahrubab.me](https://abdullahrubab.me): medical-imaging AI research and shipped products.
-One page, six acts — a water hero, product-coloured work cards, a light "paper" research sheet, editorial journey rows, a charcoal extracurricular sheet and a cobalt contact block.
+One page: a water hero, product-coloured project cards, then Publications, Experience, Achievements, Education (with language skills), Skills, Extracurricular activities and Contact. Light "paper" sheets alternate with dark sections.
 
 ## Stack
 
@@ -27,16 +27,23 @@ One page, six acts — a water hero, product-coloured work cards, a light "paper
   layers, no blur filters or masks; per-frame work (ticker, water, video) runs only while on screen.
 - **The water renders behind the hero only.** It pauses when off-screen, steps its resolution down on slow devices,
   and becomes a single still frame for `prefers-reduced-motion`.
+- **Publications** show the full title on every card. Opening one (click, or search it in ⌘K) grows the card into a
+  detail view with a plain-English summary, venue, status, authors and links; ←/→ step through the papers, Esc closes.
+  The text lives in `src/content/data.ts` (`summary`, `ideas`, `statusNote`) — edit it there.
+- **The project stack holds its last card** (`STACK_HOLD` in `Projects.tsx`) so the handover to Publications isn't
+  abrupt, and the sheets glide in tied to scroll (`ui/Sheet.tsx`) rather than popping.
 - **Project cards play recordings of the real, live sites** (`public/assets/projects/*.mp4`). Video only loads near the
   viewport, pauses off-screen, and is skipped for reduced-motion / data-saver users (poster shown instead).
 - ⌘K / Ctrl K opens a command menu (sections, live projects, links, "Toggle water effects").
 - **Photos:** `public/assets/photos/` holds the hero portrait (`portrait-lit.webp`, a graded cut-out with baked rim
-  lights) and the two podium photos (`champion.webp`, `fourth-place.webp`, ~1000 px wide WebP). A missing podium photo
-  degrades to a typographic panel instead of a broken image.
+  lights), the two podium photos (`champion.webp`, `fourth-place.webp`, ~1000 px wide WebP) and `portrait-card.jpg`
+  (used for structured data). A missing podium photo degrades to a typographic panel instead of a broken image.
+  To change the portrait, cut the subject out (any matting tool), keep the transparent PNG at ~1100 px wide, and export a
+  WebP with alpha to `portrait-lit.webp`; the hero expects a ~1.1 : 1 image with the shoulders running off the bottom.
 
 ## Editing content
 
-Everything shown on the site lives in **`src/content/data.ts`** — profile, links, projects, papers, roles, podium photos, honours, extracurriculars and the toolbox.
+Everything shown on the site lives in **`src/content/data.ts`** — profile, links, projects, publications, roles, schools and languages (CEFR level → bar), podium photos, honours, skills and extracurricular activities. The CV in `public/` is the source of truth for the facts.
 Change a paper's `status` and the pipeline bar, colours and counts update themselves.
 
 To add a project: add an entry to `projects`, drop a recording and poster into `public/assets/projects/`
@@ -58,16 +65,16 @@ npm run build    # static export → ./out
 
 ```
 src/
-  app/            layout, page, legacy-route redirects, 404, icons, share image
+  app/            layout, page, legacy-route redirects, 404, icons, share image, robots.txt, sitemap.xml
   components/
     background/   WaterCanvas (WebGL2)
     nav/          Nav (glass pill), CommandPalette
     providers/    Providers, Loader (loading screen), LoadedContext
-    sections/     Hero, Ticker, Work, Research, Journey, Beyond, Contact, Footer
-    ui/           Panel, Button, Chip, BrowserFrame, Glyph, SplitWords, Reveal, …
+    sections/     Hero, Ticker, Projects, Publications, Experience, Achievements, Education, Skills, Activities, Contact, Footer
+    ui/           Sheet, Ring, Panel, Button, Chip, BrowserFrame, Glyph, SplitWords, WordCycler, Reveal, BackToTop, …
   content/data.ts all copy and data
   lib/            scroll helpers, cn, colour util
 public/assets/    logos, photos, project recordings
 ```
 
-Old URLs (`/about`, `/projects`, `/publications`, `/experience`, `/cv`) redirect to the matching section or the CV PDF.
+Old URLs (`/about`, `/projects`, `/publications`, `/experience`, `/cv`) redirect to the matching section (`/about` → Education) or the CV PDF.

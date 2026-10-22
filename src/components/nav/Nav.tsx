@@ -10,10 +10,13 @@ import { Close, Download, Menu, Search } from "@/components/ui/Icons";
 import { socialIcon } from "@/components/ui/Icons";
 
 const links = [
-  { id: "work", label: "Work" },
-  { id: "research", label: "Research" },
-  { id: "journey", label: "Journey" },
-  { id: "beyond", label: "Beyond" },
+  { id: "projects", label: "Projects" },
+  { id: "publications", label: "Publications" },
+  { id: "experience", label: "Experience" },
+  { id: "achievements", label: "Achievements" },
+  { id: "education", label: "Education" },
+  { id: "skills", label: "Skills" },
+  { id: "activities", label: "Activities" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -93,7 +96,7 @@ export default function Nav() {
             <Image src="/assets/logos/ar-mark.png" alt="" width={22} height={17} className="h-[17px] w-auto" />
           </a>
 
-          <ul className="hidden items-center md:flex">
+          <ul className="hidden items-center xl:flex">
             {links.map((l) => (
               <li key={l.id} className="relative">
                 <a
@@ -103,7 +106,7 @@ export default function Nav() {
                     go(l.id);
                   }}
                   className={cn(
-                    "relative block rounded-full px-4 py-2 text-[14px] transition-colors",
+                    "relative block rounded-full px-3.5 py-2 text-[14px] transition-colors",
                     active === l.id ? "text-white" : "text-ash-300 hover:text-white",
                   )}
                 >
@@ -120,7 +123,7 @@ export default function Nav() {
             ))}
           </ul>
 
-          <span className="mx-1.5 hidden h-5 w-px bg-white/10 md:block" />
+          <span className="mx-1.5 hidden h-5 w-px bg-white/10 xl:block" />
 
           <button
             type="button"
@@ -155,7 +158,7 @@ export default function Nav() {
             onClick={() => setOpen(true)}
             aria-label="Open menu"
             aria-expanded={open}
-            className="grid size-10 place-items-center rounded-full text-ash-200 hover:bg-white/[0.07] md:hidden"
+            className="grid size-10 place-items-center rounded-full text-ash-200 hover:bg-white/[0.07] xl:hidden"
           >
             <Menu width={20} height={20} />
           </button>

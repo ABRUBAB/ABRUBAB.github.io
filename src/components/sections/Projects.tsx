@@ -2,7 +2,7 @@
 
 import { createRef, useMemo, useState, type RefObject } from "react";
 import { motion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
-import { moreBuilds, projects, type MoreBuild, type Project } from "@/content/data";
+import { moreBuilds, projects, socials, type MoreBuild, type Project } from "@/content/data";
 import { EASE_OUT } from "@/lib/scroll";
 import BrowserFrame from "@/components/ui/BrowserFrame";
 import Button from "@/components/ui/Button";
@@ -136,7 +136,15 @@ const STEP = 14; // px each stacked card peeks above the next
  * Cards share one parent and are individually `sticky`, so each new card slides
  * over the previous one. The card underneath darkens (an opacity overlay — no
  * scaling, no filters) and its video pauses once the next card has covered it.
+ *
+ * A sticky card is released when its parent ends, and the card's own margin
+ * counts against that limit. The last card used to end the parent, so it was
+ * released the moment it arrived and the page rushed on, while every earlier card
+ * had been held for a full slide. `STACK_HOLD` is empty space after the last card
+ * inside the parent, so the stack stays pinned for that much more scrolling (the
+ * "more projects" row rises underneath it meanwhile).
  */
+const STACK_HOLD = "46vh";
 function StackItem({
   p,
   index,
@@ -157,7 +165,11 @@ function StackItem({
   useMotionValueEvent(scrollYProgress, "change", (v) => setCovered(!last && v > 0.55));
 
   return (
-    <div ref={refs[index]} className="lg:sticky lg:mb-[15vh] lg:last:mb-0" style={{ top: STICKY_TOP + index * STEP }}>
+    <div
+      ref={refs[index]}
+      className="lg:sticky lg:mb-[15vh]"
+      style={{ top: STICKY_TOP + index * STEP }}
+    >
       <div className="relative">
         <ProjectCard p={p} index={index} covered={covered} />
         <motion.div
@@ -197,16 +209,16 @@ function BuildTile({ b }: { b: MoreBuild }) {
   );
 }
 
-export default function Work() {
+export default function Projects() {
   const refs = useMemo(() => projects.map(() => createRef<HTMLDivElement>()), []);
   return (
-    <section id="work" className="section">
+    <section id="projects" className="section">
       <div aria-hidden className="bg-dots pointer-events-none absolute inset-x-0 top-0 h-[75%]" />
       <div className="wrap relative">
         <SectionHead
-          label="Selected work"
-          lead="Things that"
-          accent="run."
+          label="Projects" index="01"
+          lead="My"
+          accent="projects."
           accentClass="text-ember-500"
           aside={
             <p className="flex items-center gap-2.5 pb-2 text-[15px] text-ash-400">
@@ -223,14 +235,27 @@ export default function Work() {
           {projects.map((p, i) => (
             <StackItem key={p.id} p={p} index={i} refs={refs} />
           ))}
+          <div aria-hidden className="hidden lg:block" style={{ height: STACK_HOLD }} />
         </div>
 
-        <div className="mt-16 lg:mt-24">
+        <div className="mt-6 lg:mt-10">
           <Reveal>
-            <p className="label mb-5 flex items-center gap-3">
-              <span className="h-px w-8 bg-gradient-to-r from-ash-500 to-transparent" />
-              More builds · code only
-            </p>
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
+              <p className="label flex items-center gap-3">
+                <span className="h-px w-8 bg-gradient-to-r from-ash-500 to-transparent" />
+                More projects · code only
+              </p>
+              <Button
+                href={socials[0].href}
+                external
+                variant="outline"
+                size="sm"
+                leading={<GitHub width={15} height={15} />}
+                trailing={<ArrowUpRight width={14} height={14} />}
+              >
+                All repositories
+              </Button>
+            </div>
           </Reveal>
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {moreBuilds.map((b, i) => (
