@@ -79,47 +79,12 @@
     outline-offset: 3px;
   }
 
-  /* Fine film grain over everything — gives the ash its texture. */
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 90;
-    pointer-events: none;
-    opacity: 0.05;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-    mix-blend-mode: soft-light;
-  }
-
-  /* Custom cursor is active: hide the system one (inputs keep the I-beam). */
-  html[data-cursor="on"],
-  html[data-cursor="on"] * {
-    cursor: none !important;
-  }
-  html[data-cursor="on"] input,
-  html[data-cursor="on"] textarea {
-    cursor: text !important;
-  }
-
-  * {
+  html {
     scrollbar-width: thin;
     scrollbar-color: var(--color-ash-700) transparent;
+    scrollbar-gutter: stable;
   }
 
-  /* Lenis (smooth scroll) — recommended base styles */
-  html.lenis,
-  html.lenis body {
-    height: auto;
-  }
-  .lenis.lenis-smooth {
-    scroll-behavior: auto !important;
-  }
-  .lenis.lenis-smooth [data-lenis-prevent] {
-    overscroll-behavior: contain;
-  }
-  .lenis.lenis-stopped {
-    overflow: hidden;
-  }
 }
 
 @layer components {
@@ -171,18 +136,11 @@
   /* gradient with a slow sheen, for the one italic word per heading */
   .text-ice {
     background: linear-gradient(100deg, #ffffff 0%, var(--color-cobalt-200) 30%, var(--color-cobalt-400) 62%, var(--color-cobalt-200) 100%);
-    background-size: 220% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: sheen 9s ease-in-out infinite alternate;
   }
 
-  @keyframes sheen {
-    to {
-      background-position: 100% 0;
-    }
-  }
 
   .outline-text {
     color: transparent;
@@ -235,8 +193,8 @@
     background:
       linear-gradient(145deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.02) 55%, rgb(255 255 255 / 0.05)),
       rgb(12 12 14 / 0.58);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.18),
       inset 0 -1px 0 rgb(0 0 0 / 0.35),
@@ -271,28 +229,20 @@
       rgb(10 10 12 / 0.78);
   }
 
-  /* Chromium-only water refraction on the nav pill (filter lives in <LiquidDefs/>). */
-  html[data-refract] .liquid {
-    -webkit-backdrop-filter: blur(6px) saturate(170%) url(#liquid-glass);
-    backdrop-filter: blur(6px) saturate(170%) url(#liquid-glass);
-  }
-
   /* ───────────────────────── Texture ───────────────────────── */
 
+  /* Pattern fades into the section colour with an overlaid gradient — no mask-image. */
   .bg-dots {
-    background-image: radial-gradient(rgb(255 255 255 / 0.16) 1px, transparent 1.3px);
-    background-size: 26px 26px;
-    -webkit-mask-image: radial-gradient(80% 70% at 50% 35%, #000 20%, transparent 100%);
-    mask-image: radial-gradient(80% 70% at 50% 35%, #000 20%, transparent 100%);
+    background:
+      radial-gradient(ellipse 80% 70% at 50% 30%, transparent 20%, var(--color-ink) 100%),
+      radial-gradient(rgb(255 255 255 / 0.16) 1px, transparent 1.3px) 0 0 / 26px 26px;
   }
 
   .bg-paper-grid {
-    background-image:
-      linear-gradient(rgb(9 9 11 / 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(9 9 11 / 0.045) 1px, transparent 1px);
-    background-size: 64px 64px;
-    -webkit-mask-image: radial-gradient(90% 80% at 50% 30%, #000 25%, transparent 100%);
-    mask-image: radial-gradient(90% 80% at 50% 30%, #000 25%, transparent 100%);
+    background:
+      radial-gradient(ellipse 90% 80% at 50% 30%, transparent 25%, var(--color-paper) 100%),
+      linear-gradient(rgb(9 9 11 / 0.045) 1px, transparent 1px) 0 0 / 64px 64px,
+      linear-gradient(90deg, rgb(9 9 11 / 0.045) 1px, transparent 1px) 0 0 / 64px 64px;
   }
 
   /* ───────────────────────── Keyframes ───────────────────────── */
@@ -307,19 +257,37 @@
     }
   }
 
-  @keyframes drift {
-    0% {
-      transform: translate3d(-6%, -4%, 0) scale(1);
-    }
-    50% {
-      transform: translate3d(5%, 6%, 0) scale(1.12);
-    }
-    100% {
-      transform: translate3d(-6%, -4%, 0) scale(1);
+  @keyframes orbit {
+    to {
+      transform: rotate(360deg);
     }
   }
-  .drift {
-    animation: drift var(--drift, 22s) ease-in-out infinite;
+  .orbit {
+    animation: orbit var(--orbit, 24s) linear infinite;
+  }
+
+  @keyframes scroll-cue {
+    from {
+      transform: translateY(-12px);
+    }
+    to {
+      transform: translateY(40px);
+    }
+  }
+
+  @keyframes breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.92;
+    }
+    50% {
+      transform: scale(1.06);
+      opacity: 1;
+    }
+  }
+  .breathe {
+    animation: breathe 2.6s ease-in-out infinite;
   }
 
   @keyframes ping-soft {
@@ -362,8 +330,3 @@
   }
 }
 
-@media print {
-  body::after {
-    display: none;
-  }
-}

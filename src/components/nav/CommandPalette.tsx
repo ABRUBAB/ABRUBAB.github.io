@@ -47,6 +47,7 @@ export default function CommandPalette() {
       nav("work", "Work"),
       nav("research", "Research"),
       nav("journey", "Journey"),
+      nav("beyond", "Beyond the lab"),
       nav("contact", "Contact"),
       ...projects.map<Item>((p) => ({
         id: `live-${p.id}`,
@@ -186,7 +187,7 @@ export default function CommandPalette() {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[80] grid place-items-start justify-center bg-ink/60 px-4 pt-[14vh] backdrop-blur-md"
+          className="fixed inset-0 z-[80] grid place-items-start justify-center bg-ink/80 px-4 pt-[14vh]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -220,7 +221,7 @@ export default function CommandPalette() {
               <kbd className="rounded-md border border-white/10 px-1.5 py-1 font-mono text-[10px] text-ash-400">ESC</kbd>
             </div>
 
-            <ul ref={listRef} data-lenis-prevent className="max-h-[52vh] overflow-y-auto p-2" role="listbox">
+            <ul ref={listRef} className="max-h-[52vh] overflow-y-auto p-2" role="listbox">
               {filtered.length === 0 && <li className="px-4 py-8 text-center text-sm text-ash-400">Nothing matches “{q}”.</li>}
               {filtered.map((item, i) => {
                 const heading = item.group !== lastGroup;

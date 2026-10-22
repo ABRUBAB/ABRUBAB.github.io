@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { useState } from "react";
+import { motion } from "motion/react";
+import { EASE_OUT } from "@/lib/scroll";
 import { profile, socials } from "@/content/data";
 import { cn } from "@/lib/cn";
 import LiveClock from "@/components/ui/LiveClock";
@@ -57,24 +58,22 @@ function CopyEmail() {
 }
 
 export default function Contact() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 20%"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [60, 0]);
-
   return (
-    <section id="contact" ref={ref} className="relative py-3 sm:py-5">
+    <section id="contact" className="relative py-3 sm:py-5">
       <motion.div
-        style={{ scale, y, transformOrigin: "50% 0%" }}
+        initial={{ opacity: 0, y: 56 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "0px 0px -8% 0px" }}
+        transition={{ duration: 1, ease: EASE_OUT }}
         className="sheet bg-cobalt-600 text-white"
       >
         {/* light from the upper right, depth to the lower left, two slow colour pools */}
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_80%_at_88%_0%,rgb(111_144_255/0.85),transparent_62%),radial-gradient(80%_90%_at_0%_100%,rgb(7_15_61/0.9),transparent_60%)]" />
-        <div aria-hidden className="drift pointer-events-none absolute -left-32 top-[10%] size-[520px] rounded-full bg-cobalt-300/30 blur-3xl" style={{ ["--drift" as string]: "20s" }} />
-        <div aria-hidden className="drift pointer-events-none absolute -bottom-40 right-[8%] size-[480px] rounded-full bg-ember-500/25 blur-3xl" style={{ ["--drift" as string]: "26s" }} />
+        <div aria-hidden className="pointer-events-none absolute -left-32 top-[10%] size-[520px] rounded-full bg-[radial-gradient(closest-side,rgb(158_182_255/0.32),transparent)]" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-40 right-[8%] size-[480px] rounded-full bg-[radial-gradient(closest-side,rgb(255_90_31/0.3),transparent)]" />
 
         <div className="section wrap">
-          <Reveal blur>
+          <Reveal>
             <p className="label flex items-center gap-3 !text-white/70">
               <span className="h-px w-8 bg-gradient-to-r from-white to-transparent" />
               Contact

@@ -61,7 +61,7 @@ const personLd = {
   "@type": "Person",
   name: profile.name,
   url: profile.site,
-  image: `${profile.site}/assets/photos/portrait-cutout.webp`,
+  image: `${profile.site}/assets/photos/portrait-lit.webp`,
   jobTitle: "AI researcher & engineer",
   email: `mailto:${profile.email}`,
   address: { "@type": "PostalAddress", addressLocality: "Dhaka", addressCountry: "BD" },
@@ -79,7 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd).replace(/</g, "\\u003c") }}
         />
         <noscript>
-          <style>{`.reveal{opacity:1!important;transform:none!important;filter:none!important}`}</style>
+          <style>{`#loader{display:none!important}.reveal,#top *{opacity:1!important;transform:none!important}`}</style>
         </noscript>
         <Providers>{children}</Providers>
       </body>

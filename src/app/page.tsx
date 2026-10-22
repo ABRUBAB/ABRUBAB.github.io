@@ -5,6 +5,7 @@ import Ticker from "@/components/sections/Ticker";
 import Work from "@/components/sections/Work";
 import Research from "@/components/sections/Research";
 import Journey from "@/components/sections/Journey";
+import Beyond from "@/components/sections/Beyond";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
 
@@ -19,6 +20,7 @@ export default function Home() {
         <Work />
         <Research />
         <Journey />
+        <Beyond />
         <Contact />
       </main>
       <Footer />

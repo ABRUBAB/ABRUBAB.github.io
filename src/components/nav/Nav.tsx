@@ -13,6 +13,7 @@ const links = [
   { id: "work", label: "Work" },
   { id: "research", label: "Research" },
   { id: "journey", label: "Journey" },
+  { id: "beyond", label: "Beyond" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -51,11 +52,7 @@ export default function Nav() {
   // freeze page scroll while the mobile sheet is open
   useEffect(() => {
     lockScroll(open);
-    document.documentElement.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.documentElement.style.overflow = "";
-      lockScroll(false);
-    };
+    return () => lockScroll(false);
   }, [open]);
 
   const go = (id: string) => {
@@ -82,7 +79,7 @@ export default function Nav() {
       >
         <nav
           aria-label="Primary"
-          className="glass liquid pointer-events-auto flex items-center gap-1 rounded-full p-1.5 pr-2"
+          className="glass pointer-events-auto flex items-center gap-1 rounded-full p-1.5 pr-2"
         >
           <a
             href="#top"
@@ -176,8 +173,7 @@ export default function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
-            className="fixed inset-0 z-[70] flex flex-col bg-ink/70 px-6 pb-10 pt-5 backdrop-blur-2xl"
-            data-lenis-prevent
+            className="fixed inset-0 z-[70] flex flex-col bg-ink/95 px-6 pb-10 pt-5"
           >
             <div className="flex justify-end">
               <button

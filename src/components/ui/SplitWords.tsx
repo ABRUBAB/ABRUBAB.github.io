@@ -16,6 +16,7 @@ export default function SplitWords({
   delay = 0,
   stagger = 0.09,
   inView = false,
+  play = true,
 }: {
   text: string;
   className?: string;
@@ -23,9 +24,12 @@ export default function SplitWords({
   delay?: number;
   stagger?: number;
   inView?: boolean;
+  /** hold the reveal until true (e.g. until the loading screen lifts) */
+  play?: boolean;
 }) {
   const words = text.split(" ");
-  const target = { y: "0%", filter: "blur(0px)" };
+  const target = { y: "0%" };
+  const hidden = { y: "112%" };
   return (
     <span aria-label={text} className={cn("inline", className)}>
       {words.map((w, i) => (
@@ -36,11 +40,11 @@ export default function SplitWords({
           style={{ marginBottom: "-0.14em", marginRight: i < words.length - 1 ? "0.22em" : 0 }}
         >
           <motion.span
-            className={cn("inline-block will-change-transform", wordClassName?.(w, i))}
-            initial={{ y: "112%", filter: "blur(10px)" }}
+            className={cn("inline-block", wordClassName?.(w, i))}
+            initial={{ y: "112%" }}
             {...(inView
               ? { whileInView: target, viewport: { once: true, margin: "0px 0px -12% 0px" } }
-              : { animate: target })}
+              : { animate: play ? target : hidden })}
             transition={{ duration: 1.15, delay: delay + i * stagger, ease: EASE_OUT }}
           >
             {w}

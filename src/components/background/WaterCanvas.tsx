@@ -37,12 +37,6 @@ float noise(vec2 p){
   return mix(mix(hash(i), hash(i + vec2(1,0)), f.x),
              mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), f.x), f.y);
 }
-float fbm(vec2 p){
-  float a = 0.5, s = 0.0;
-  for(int i = 0; i < 4; i++){ s += a * noise(p); p *= 2.02; a *= 0.5; }
-  return s;
-}
-
 // tileable water caustics (after Dave Hoskins' classic)
 float caustic(vec2 uv, float t){
   vec2 p = mod(uv * 6.28318530718, 6.28318530718) - 250.0;
@@ -59,9 +53,7 @@ float caustic(vec2 uv, float t){
   return pow(abs(c), 8.0);
 }
 float causticMix(vec2 q, float t){
-  float c1 = caustic(q * 1.45 + 0.3, t * 0.55);
-  float c2 = caustic(q * 2.6 - 0.7, t * 0.8 + 20.0);
-  return c1 * 0.8 + c2 * 0.5;
+  return caustic(q * 1.7 + 0.3, t * 0.6) * 1.25;
 }
 
 void main(){
@@ -88,7 +80,7 @@ void main(){
 
   // domain warp so the light bends and breathes
   vec2 q = p + off;
-  vec2 warp = vec2(fbm(q * 1.5 + vec2(0.0, t * 0.05)), fbm(q * 1.5 + vec2(5.2, -t * 0.04)));
+  vec2 warp = vec2(noise(q * 1.9 + vec2(0.0, t * 0.05)), noise(q * 1.9 + vec2(5.2, -t * 0.04)));
   q += (warp - 0.5) * 0.15;
 
   float cs = causticMix(q, t);
@@ -125,9 +117,15 @@ void main(){
   outColor = vec4(col, 1.0);
 }`;
 
-const TIERS = [0.62, 0.46, 0.34]; // render scale vs CSS pixels
-const MAX_DPR = 1.25;
+const TIERS = [0.56, 0.42, 0.32]; // render scale vs CSS pixels (the water is smooth, so low-res looks identical)
+const MAX_DPR = 1;
 const RIPPLES = 8;
+
+/** Lets the loading screen know the background is settled (or will never be). */
+function markWaterReady() {
+  document.documentElement.dataset.waterReady = "1";
+  window.dispatchEvent(new Event("water:ready"));
+}
 
 function compile(gl: WebGL2RenderingContext, type: number, src: string) {
   const sh = gl.createShader(type)!;
@@ -162,6 +160,7 @@ export default function WaterCanvas() {
       if (!enabled) {
         canvas.style.opacity = "0";
         root.dataset.water = "off";
+        markWaterReady();
         return;
       }
 
@@ -174,6 +173,7 @@ export default function WaterCanvas() {
       });
       if (!gl) {
         root.dataset.water = "off";
+        markWaterReady();
         return;
       }
 
@@ -187,6 +187,7 @@ export default function WaterCanvas() {
       } catch (err) {
         console.warn("[water] disabled:", err);
         root.dataset.water = "off";
+        markWaterReady();
         return;
       }
       root.dataset.water = "on";
@@ -230,7 +231,12 @@ export default function WaterCanvas() {
         : null;
       if (topEl) io?.observe(topEl);
 
-      let tier = 0;
+      // phones and low-core / low-memory machines start one tier down
+      const nav = navigator as Navigator & { deviceMemory?: number };
+      let tier =
+        window.matchMedia("(pointer: coarse)").matches || (navigator.hardwareConcurrency ?? 8) <= 4 || (nav.deviceMemory ?? 8) <= 4
+          ? 1
+          : 0;
       let cssW = 0;
       let cssH = 0;
       const resize = (force = false) => {
@@ -291,8 +297,18 @@ export default function WaterCanvas() {
       // adaptive quality: watch rAF delta, step resolution down, then cap fps
       let frames = 0;
       let acc = 0;
+      let worst = 0;
+      let winStart = 0;
+      let firstWindow = true;
       let capped = false;
       let raf = 0;
+      let announced = false;
+      // tells the loading screen the water has compiled and settled on a quality tier
+      const announceReady = () => {
+        if (announced) return;
+        announced = true;
+        markWaterReady();
+      };
       let frozen = false;
 
       const draw = (time: number, motion: number) => {
@@ -322,6 +338,7 @@ export default function WaterCanvas() {
           reveal();
         };
         still();
+        markWaterReady();
         const onResize = () => {
           resize();
           still();
@@ -343,14 +360,24 @@ export default function WaterCanvas() {
         if (capped && dt < 33) return;
         last = now;
 
-        // adapt
+        // adapt: the first window is short (the loading screen waits on it); the worst frame
+        // is dropped so a single hitch can't cost quality
         frames++;
-        if (frames > 20) acc += dt;
-        if (frames === 80) {
-          const avg = acc / 60;
+        if (frames === 13) winStart = now;
+        if (frames > 12) {
+          acc += dt;
+          if (dt > worst) worst = dt;
+        }
+        const slowStart = firstWindow && frames > 18 && now - winStart > 600;
+        if (frames === (firstWindow ? 24 : 57) || slowStart) {
+          const n = frames - 12;
+          const avg = (acc - worst) / Math.max(1, n - 1);
           acc = 0;
-          frames = 20;
-          if (avg > 40) {
+          worst = 0;
+          frames = 12;
+          firstWindow = false;
+          announceReady();
+          if (avg > 24) {
             if (tier < TIERS.length - 1) {
               tier++;
               resize(true);
@@ -379,6 +406,7 @@ export default function WaterCanvas() {
         e.preventDefault();
         cancelAnimationFrame(raf);
         root.dataset.water = "off";
+        markWaterReady();
       };
       const onRestored = () => {
         if (!disposed) start();

@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion } from "motion/react";
 import { papers, socials, statusMeta, type Paper, type PaperStatus } from "@/content/data";
 import { hexToTriplet } from "@/lib/color";
 import { EASE_OUT } from "@/lib/scroll";
@@ -134,19 +133,20 @@ function PaperTile({ p, wide, index }: { p: Paper; wide?: boolean; index: number
 }
 
 export default function Research() {
-  const ref = useRef<HTMLElement>(null);
   const scholar = socials.find((s) => s.id === "scholar")!;
 
-  // the paper sheet rises into place as it enters
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 15%"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [60, 0]);
 
   return (
-    <section id="research" ref={ref} className="relative py-3 sm:py-5">
-      <motion.div style={{ scale, y, transformOrigin: "50% 0%" }} className="sheet bg-paper text-ink">
+    <section id="research" className="relative py-3 sm:py-5">
+      <motion.div
+        initial={{ opacity: 0, y: 56 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "0px 0px -8% 0px" }}
+        transition={{ duration: 1, ease: EASE_OUT }}
+        className="sheet bg-paper text-ink"
+      >
         <div aria-hidden className="bg-paper-grid pointer-events-none absolute inset-0" />
-        <div aria-hidden className="drift pointer-events-none absolute -right-40 -top-40 size-[560px] rounded-full bg-cobalt-400/25 blur-3xl" style={{ ["--drift" as string]: "26s" }} />
+        <div aria-hidden className="pointer-events-none absolute -right-40 -top-40 size-[560px] rounded-full bg-[radial-gradient(closest-side,rgb(111_144_255/0.34),transparent)]" />
 
         <div className="section wrap">
           <SectionHead

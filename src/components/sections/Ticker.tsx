@@ -4,6 +4,7 @@ import { useRef } from "react";
 import {
   motion,
   useAnimationFrame,
+  useInView,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -36,10 +37,12 @@ export default function Ticker() {
   const boost = useTransform(smooth, [0, 1000], [0, 5], { clamp: false });
   const skew = useTransform(smooth, [-1600, 0, 1600], [7, 0, -7]);
   const dir = useRef(1);
+  const host = useRef<HTMLDivElement>(null);
+  const onScreen = useInView(host, { margin: "120px 0px" });
   const reduce = useReducedMotion();
 
   useAnimationFrame((_, delta) => {
-    if (reduce) return;
+    if (reduce || !onScreen) return; // no per-frame work while it is off-screen
     const v = boost.get();
     if (v < -0.02) dir.current = -1;
     else if (v > 0.02) dir.current = 1;
@@ -52,7 +55,7 @@ export default function Ticker() {
   const row = [...ticker, ...ticker];
 
   return (
-    <div aria-hidden className="relative overflow-hidden py-[clamp(1.5rem,3.5vw,3rem)]">
+    <div ref={host} aria-hidden className="relative overflow-hidden py-[clamp(1.5rem,3.5vw,3rem)]">
       <motion.div style={{ x, skewX: skew }} className="flex w-max items-center whitespace-nowrap will-change-transform">
         {row.map((t, i) => (
           <span key={`${t}-${i}`} className="flex items-center">

@@ -26,7 +26,7 @@ export default function SectionHead({
   return (
     <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
       <div>
-        <Reveal blur>
+        <Reveal>
           <p className={cn("label flex items-center gap-3", light && "text-ash-500")}>
             <span className={cn("h-px w-8 bg-gradient-to-r to-transparent", light ? "from-ink" : "from-cobalt-400")} />
             {label}

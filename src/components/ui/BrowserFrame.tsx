@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
-import { motion, useInView, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
+import { useInView, useReducedMotion } from "motion/react";
 import { Lock } from "./Icons";
 
 /**
  * A browser window that plays a short recording of the real, live site.
- * Video only loads once it nears the viewport and pauses when it leaves;
- * reduced-motion and data-saver users get the poster frame instead.
+ * The video only loads once it nears the viewport, and plays only while it is
+ * on screen and not covered by the next stacked card — so at most one decodes
+ * at a time. Reduced-motion and data-saver users get the poster frame.
  */
 export default function BrowserFrame({
   host,
@@ -16,6 +17,7 @@ export default function BrowserFrame({
   poster,
   accent,
   title,
+  paused = false,
 }: {
   host: string;
   href: string;
@@ -23,10 +25,11 @@ export default function BrowserFrame({
   poster: string;
   accent: string;
   title: string;
+  paused?: boolean;
 }) {
   const wrapRef = useRef<HTMLAnchorElement>(null);
   const vidRef = useRef<HTMLVideoElement>(null);
-  const near = useInView(wrapRef, { margin: "400px 0px", once: true });
+  const near = useInView(wrapRef, { margin: "300px 0px", once: true });
   const visible = useInView(wrapRef, { margin: "0px 0px -8% 0px" });
   const reduce = useReducedMotion();
   const saveData = useSyncExternalStore(
@@ -35,8 +38,7 @@ export default function BrowserFrame({
     () => false,
   );
 
-  // Pick the container the browser can actually decode: H.264 MP4 where available
-  // (Chrome, Edge, Safari), otherwise the VP9 WebM (some Linux builds ship without H.264).
+  // H.264 MP4 where the browser can decode it, otherwise the VP9 WebM.
   const mp4 = useSyncExternalStore(
     () => () => {},
     () => document.createElement("video").canPlayType('video/mp4; codecs="avc1.42E01E"') !== "",
@@ -49,44 +51,24 @@ export default function BrowserFrame({
   useEffect(() => {
     const v = vidRef.current;
     if (!v || !canPlay || !near) return;
-    if (visible) v.play().catch(() => {});
+    if (visible && !paused) v.play().catch(() => {});
     else v.pause();
-  }, [visible, near, canPlay]);
-
-  // gentle 3D tilt toward the pointer
-  const px = useMotionValue(0);
-  const py = useMotionValue(0);
-  const sx = useSpring(px, { stiffness: 140, damping: 18 });
-  const sy = useSpring(py, { stiffness: 140, damping: 18 });
-  const rotY = useTransform(sx, [-0.5, 0.5], [-4.5, 4.5]);
-  const rotX = useTransform(sy, [-0.5, 0.5], [3.5, -3.5]);
+  }, [visible, paused, near, canPlay]);
 
   return (
-    <div className="relative [perspective:1400px]">
+    <div className="relative">
       <div
         aria-hidden
-        className="absolute -inset-8 -z-10 rounded-[48px] opacity-45 blur-3xl"
+        className="absolute -inset-8 -z-10 rounded-[48px] opacity-45"
         style={{ background: `radial-gradient(60% 60% at 55% 50%, ${accent}66, transparent 72%)` }}
       />
-      <motion.a
+      <a
         ref={wrapRef}
         href={href}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Open ${title} live site`}
-        data-cursor="Open"
-        style={{ rotateX: rotX, rotateY: rotY, transformStyle: "preserve-3d" }}
-        onPointerMove={(e) => {
-          if (e.pointerType !== "mouse" || !wrapRef.current) return;
-          const r = wrapRef.current.getBoundingClientRect();
-          px.set((e.clientX - r.left) / r.width - 0.5);
-          py.set((e.clientY - r.top) / r.height - 0.5);
-        }}
-        onPointerLeave={() => {
-          px.set(0);
-          py.set(0);
-        }}
-        className="group relative block overflow-hidden rounded-[20px] border border-white/[0.11] bg-ink shadow-[0_40px_90px_-30px_rgb(0_0_0/0.9)]"
+        className="group relative block overflow-hidden rounded-[20px] border border-white/[0.11] bg-ink shadow-[0_40px_90px_-30px_rgb(0_0_0/0.9)] transition-transform duration-500 ease-out-quint hover:-translate-y-1"
       >
         <div className="flex h-9 items-center gap-3 border-b border-white/[0.07] bg-white/[0.045] px-3.5">
           <span className="flex gap-1.5" aria-hidden>
@@ -120,7 +102,7 @@ export default function BrowserFrame({
             Open live ↗
           </span>
         </div>
-      </motion.a>
+      </a>
     </div>
   );
 }

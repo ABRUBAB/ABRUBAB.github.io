@@ -1,9 +1,8 @@
 "use client";
 
-import { createRef, useMemo, type RefObject } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { createRef, useMemo, useState, type RefObject } from "react";
+import { motion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
 import { moreBuilds, projects, type MoreBuild, type Project } from "@/content/data";
-import { hexToTriplet } from "@/lib/color";
 import { EASE_OUT } from "@/lib/scroll";
 import BrowserFrame from "@/components/ui/BrowserFrame";
 import Button from "@/components/ui/Button";
@@ -16,33 +15,33 @@ import { ArrowUpRight, GitHub, Trophy } from "@/components/ui/Icons";
 
 const container = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.085, delayChildren: 0.12 } },
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
 const item = {
-  hidden: { opacity: 0, y: 26 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.95, ease: EASE_OUT } },
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.85, ease: EASE_OUT } },
 };
 
 /** Each card takes the colour of the product it shows. */
-function ProjectCard({ p, index }: { p: Project; index: number }) {
+function ProjectCard({ p, index, covered }: { p: Project; index: number; covered: boolean }) {
   const isAward = /place/i.test(p.badge ?? "");
   const n = String(index + 1).padStart(2, "0");
   return (
     <Panel
       as="article"
       aria-label={p.title}
+      spotlight={false}
       className="grid gap-5 overflow-hidden rounded-[32px] p-4 sm:p-5 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-8 lg:p-6"
       style={{
-        ["--spot" as string]: hexToTriplet(p.accent),
         background: `radial-gradient(90% 80% at 100% 0%, color-mix(in oklab, ${p.accent} 28%, transparent), transparent 64%), color-mix(in oklab, ${p.accent} 10%, #0b0b0d)`,
         borderColor: `color-mix(in oklab, ${p.accent} 26%, transparent)`,
       }}
     >
-      {/* a slow pool of the product's colour */}
+      {/* a pool of the product's colour — a plain gradient, no filters */}
       <span
         aria-hidden
-        className="drift pointer-events-none absolute -bottom-36 -left-28 size-[480px] rounded-full opacity-[0.28] blur-3xl"
-        style={{ background: p.accent, ["--drift" as string]: `${19 + index * 3}s` }}
+        className="pointer-events-none absolute -bottom-44 -left-36 size-[560px] rounded-full opacity-40"
+        style={{ background: `radial-gradient(closest-side, ${p.accent}, transparent)` }}
       />
 
       {/* copy */}
@@ -108,14 +107,22 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
 
       {/* live recording */}
       <motion.div
-        initial={{ opacity: 0, y: 64, scale: 0.95 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        initial={{ opacity: 0, y: 48 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-        transition={{ duration: 1.3, delay: 0.1, ease: EASE_OUT }}
+        transition={{ duration: 1.1, delay: 0.1, ease: EASE_OUT }}
         className="order-1 lg:order-2 lg:flex lg:items-center"
       >
         <div className="w-full">
-          <BrowserFrame host={p.host} href={p.live} video={p.video} poster={p.poster} accent={p.accent} title={p.title} />
+          <BrowserFrame
+            host={p.host}
+            href={p.live}
+            video={p.video}
+            poster={p.poster}
+            accent={p.accent}
+            title={p.title}
+            paused={covered}
+          />
         </div>
       </motion.div>
     </Panel>
@@ -127,8 +134,8 @@ const STEP = 14; // px each stacked card peeks above the next
 
 /**
  * Cards share one parent and are individually `sticky`, so each new card slides
- * over the previous one. The card underneath recedes (scale + shade) in step
- * with how far the *next* card has travelled.
+ * over the previous one. The card underneath darkens (an opacity overlay — no
+ * scaling, no filters) and its video pauses once the next card has covered it.
  */
 function StackItem({
   p,
@@ -141,24 +148,24 @@ function StackItem({
 }) {
   const next = refs[index + 1];
   const last = !next;
+  const [covered, setCovered] = useState(false);
   const { scrollYProgress } = useScroll({
     target: next ?? refs[index],
     offset: ["start end", `start ${STICKY_TOP + (index + 1) * STEP}px`],
   });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, last ? 1 : 0.94]);
   const shade = useTransform(scrollYProgress, [0, 1], [0, last ? 0 : 0.62]);
+  useMotionValueEvent(scrollYProgress, "change", (v) => setCovered(!last && v > 0.55));
 
   return (
     <div ref={refs[index]} className="lg:sticky lg:mb-[15vh] lg:last:mb-0" style={{ top: STICKY_TOP + index * STEP }}>
-      <motion.div className="relative" style={{ scale, transformOrigin: "50% 0%" }}>
-        <ProjectCard p={p} index={index} />
-        {/* recede by shading with an overlay (a CSS filter here would break backdrops) */}
+      <div className="relative">
+        <ProjectCard p={p} index={index} covered={covered} />
         <motion.div
           aria-hidden
           style={{ opacity: shade }}
           className="pointer-events-none absolute inset-0 z-10 rounded-[32px] bg-ink"
         />
-      </motion.div>
+      </div>
     </div>
   );
 }

@@ -266,6 +266,8 @@ export interface Role {
   logo: string;
   logoBg: "light" | "dark";
   tags: string[];
+  /** supervisor / collaborator, shown as a quiet line */
+  with?: string;
 }
 
 export const roles: Role[] = [
@@ -278,6 +280,7 @@ export const roles: Role[] = [
     logo: "/assets/logos/nbtc.webp",
     logoBg: "light",
     tags: ["Multimodal oncology AI", "Self-powered sensors"],
+    with: "Dr. Md. Ali Hossain · Director, NBTC",
   },
   {
     id: "hirl",
@@ -288,6 +291,7 @@ export const roles: Role[] = [
     logo: "/assets/logos/hirl.webp",
     logoBg: "light",
     tags: ["Clinical ML", "MSEA-Net"],
+    with: "Dr. Md. Zahid Hasan · Director, HIRL",
   },
   {
     id: "gpu",
@@ -336,18 +340,137 @@ export interface Honour {
   sub: string;
 }
 
-export const champion = {
-  title: "Champion",
-  event: "AI Hackathon 2026",
-  sub: "Team ShadowForge · Daffodil International University × World AI Alliance",
-  photo: "/assets/photos/champion.webp",
-};
+/** On-stage moments. Photos live in public/assets/photos/. */
+export interface StageMoment {
+  id: string;
+  rank: string; // short chip text
+  title: string; // big word
+  event: string; // serif italic line
+  sub: string;
+  photo: string;
+  project: { name: string; href: string };
+}
+
+export const stage: StageMoment[] = [
+  {
+    id: "champion",
+    rank: "1st place",
+    title: "Champion",
+    event: "AI Hackathon 2026",
+    sub: "Team ShadowForge · Daffodil International University × World AI Alliance",
+    photo: "/assets/photos/champion.webp",
+    project: { name: "NeuralSched", href: "https://neuralsched.vercel.app" },
+  },
+  {
+    id: "fourth",
+    rank: "4th place",
+    title: "4th place",
+    event: "AI DEV FEST 2026",
+    sub: "Inter-University AI Hackathon · Daffodil International University · 7 Oct 2026",
+    photo: "/assets/photos/fourth-place.webp",
+    project: { name: "UVERA", href: "https://uvera-ai.vercel.app" },
+  },
+];
 
 export const honours: Honour[] = [
-  { id: "datathon", big: "48 / 196", title: "bKash × NSUCEC Datathon 2026", sub: "AUC 0.98525" },
-  { id: "devfest", big: "4th", title: "AI DEV FEST 2026", sub: "UVERA" },
-  { id: "poster", big: "Poster", title: "DIU-DoR Research Poster 2026", sub: "RAM-ViT" },
+  { id: "datathon", big: "48 / 196", title: "bKash × NSUCEC Datathon 2026", sub: "AUC 0.98525 · national teams" },
+  { id: "poster", big: "Poster", title: "DIU-DoR Research Poster 2026", sub: "RAM-ViT · Directorate of Research" },
+  { id: "nasa", big: "NASA", title: "Space Apps Challenge 2026", sub: "Dhaka · ShadowAstra Atlas" },
   { id: "uta", big: "Top 50", title: "Unlock the Algorithm 2024", sub: "DIU ACM Wing" },
+  { id: "takeoff", big: "17th", title: "Take-Off Programming Contest 2023", sub: "DIU Computer Programming Club" },
+  { id: "saifur", big: "1st", title: "Saifur's Web Design Competition", sub: "Champion · 2018" },
+];
+
+/* ───────────────────────── Beyond the lab ───────────────────────── */
+
+export type BeyondKind = "contest" | "olympiad" | "expo" | "conference" | "school" | "community" | "kaggle";
+
+export interface BeyondItem {
+  id: string;
+  kind: BeyondKind;
+  when: string;
+  title: string;
+  org: string;
+  note?: string;
+}
+
+export const beyond: BeyondItem[] = [
+  {
+    id: "cpc",
+    kind: "contest",
+    when: "2023 → 24",
+    title: "Executive Member · ACM Wing",
+    org: "DIU Computer Programming Club",
+    note: "Examiner and organiser for Unlock the Algorithm and the Take-Off Programming Contest",
+  },
+  {
+    id: "becithcon",
+    kind: "conference",
+    when: "Sept 2026",
+    title: "Paper Presenter",
+    org: "IEEE BECITHCON 2026 · IUBAT, Dhaka",
+    note: "Presented two accepted papers; presentation and paper certificates received",
+  },
+  {
+    id: "bdaio",
+    kind: "olympiad",
+    when: "2026",
+    title: "Technical Volunteer & Proctor",
+    org: "Bangladesh National AI Olympiad (BDAIO)",
+    note: "Participant coordination and event management",
+  },
+  {
+    id: "ddi",
+    kind: "expo",
+    when: "Jan 2026",
+    title: "Volunteer · Guest Support",
+    org: "Digital Device & Innovation Expo · BICC, Dhaka",
+  },
+  {
+    id: "community",
+    kind: "community",
+    when: "Ongoing",
+    title: "Community volunteering",
+    org: "Mukafa Charity · Uttara Youth Society · Student Welfare Foundation Bangladesh",
+    note: "Judging and management roles",
+  },
+  {
+    id: "school",
+    kind: "school",
+    when: "2018 → 20",
+    title: "Committee Member",
+    org: "IT Club & Atomic Science Club · B.A.F. Shaheen College",
+  },
+  {
+    id: "kaggle",
+    kind: "kaggle",
+    when: "Ongoing",
+    title: "Kaggle practitioner",
+    org: "Medical AI · tabular ML · NLP competitions",
+  },
+];
+
+/* ───────────────────────── Toolbox ───────────────────────── */
+
+export const toolbox: { group: string; items: string[] }[] = [
+  {
+    group: "Deep learning & medical AI",
+    items: [
+      "PyTorch", "TensorFlow", "Keras", "MONAI", "Hugging Face", "Vision Transformers", "Evidential DL",
+      "Uncertainty quantification", "Knowledge distillation", "Few-shot learning", "Federated learning", "RAG",
+      "Medical image classification", "Segmentation",
+    ],
+  },
+  { group: "Explainable AI", items: ["Grad-CAM", "Grad-CAM++", "SHAP", "LIME", "UMAP", "t-SNE"] },
+  {
+    group: "ML & data",
+    items: ["scikit-learn", "XGBoost", "LightGBM", "OpenCV", "Albumentations", "Weights & Biases", "Kaggle", "Colab"],
+  },
+  {
+    group: "Backend & deployment",
+    items: ["FastAPI", "Django", "Docker", "Git / GitHub", "CI/CD", "Gradio", "Hugging Face Spaces"],
+  },
+  { group: "Programming", items: ["Python", "C++", "Java", "SQL · MySQL · PostgreSQL", "LaTeX"] },
 ];
 
 // Big-type ticker between hero and work.
