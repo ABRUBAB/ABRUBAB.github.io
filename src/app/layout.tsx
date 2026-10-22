@@ -1,88 +1,87 @@
-import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
+import Providers from "@/components/providers/Providers";
+import { profile, socials } from "@/content/data";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"], display: "swap" });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], display: "swap" });
+const instrument = Instrument_Serif({
+  variable: "--font-instrument",
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
+const title = "Abdullah Rubab — AI researcher & engineer";
+const description =
+  "Medical-imaging AI research, intelligent systems and shipped products. Final-year CSE student at Daffodil International University, applying for MSc programmes in Europe and Australia (Sept 2027).";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://abdullahrubab.me"),
-  title: "Abdullah Rubab | Medical AI & Uncertainty Quantification Researcher",
-  description: "Academic Research Portfolio of Abdullah Rubab — Evidential Deep Learning, Knowledge Distillation, and Uncertainty-Aware Medical AI. Targeting Master's & PhD Scholarships in Europe & Australia.",
+  metadataBase: new URL(profile.site),
+  title,
+  description,
+  applicationName: "Abdullah Rubab",
+  authors: [{ name: profile.name, url: profile.site }],
+  creator: profile.name,
   keywords: [
     "Abdullah Rubab",
-    "Medical AI",
-    "Evidential Deep Learning",
-    "Uncertainty Quantification",
-    "Knowledge Distillation",
-    "Explainable AI",
-    "XAI",
+    "medical AI",
+    "deep learning",
+    "evidential deep learning",
+    "knowledge distillation",
+    "explainable AI",
+    "computer vision",
     "Daffodil International University",
-    "NBTC",
-    "Computer Vision",
-    "Erasmus Mundus",
-    "La Caixa INPhINIT"
+    "MSc scholarship",
   ],
-  authors: [{ name: "Abdullah Rubab", url: "https://abdullahrubab.me" }],
-  creator: "Abdullah Rubab",
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
+    url: profile.site,
+    siteName: profile.name,
+    title,
+    description,
     locale: "en_US",
-    url: "https://abdullahrubab.me",
-    siteName: "Abdullah Rubab — Research Portfolio",
-    title: "Abdullah Rubab | Calibrated Confidence in Medical AI",
-    description: "I build medical AI that knows what it doesn't know. Evidential Deep Learning & Uncertainty Quantification for resource-limited clinical settings.",
-    images: [
-      {
-        url: "/assets/photos/headshot_photo.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Abdullah Rubab — Medical AI Researcher"
-      }
-    ]
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Abdullah Rubab | Calibrated Confidence in Medical AI",
-    description: "I build medical AI that knows what it doesn't know. Evidential Deep Learning & Uncertainty-Aware Medical Imaging.",
-    images: ["/assets/photos/headshot_photo.jpg"]
-  },
-  robots: {
-    index: true,
-    follow: true
-  },
-  icons: {
-    icon: [
-      { url: "/favicon.png", type: "image/png" },
-      { url: "/assets/logos/web_logo2.png", type: "image/png" },
-      { url: "/favicon.ico" }
-    ],
-    shortcut: "/favicon.png",
-    apple: "/assets/logos/web_logo2.png"
-  }
+  twitter: { card: "summary_large_image", title, description },
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport: Viewport = {
+  themeColor: "#09090b",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
+};
+
+const personLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  url: profile.site,
+  image: `${profile.site}/assets/photos/portrait-cutout.webp`,
+  jobTitle: "AI researcher & engineer",
+  email: `mailto:${profile.email}`,
+  address: { "@type": "PostalAddress", addressLocality: "Dhaka", addressCountry: "BD" },
+  alumniOf: { "@type": "CollegeOrUniversity", name: "Daffodil International University" },
+  knowsAbout: ["Medical image analysis", "Deep learning", "Uncertainty quantification", "Explainable AI"],
+  sameAs: socials.map((s) => s.href),
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${fraunces.variable} ${inter.variable} scroll-smooth`}
-    >
-      <body className="min-h-screen bg-[#0B0A0C] text-[#EDE7DD] font-sans antialiased selection:bg-[#6E1423] selection:text-[#EDE7DD]">
-        {children}
+    <html lang="en" className={`${geist.variable} ${geistMono.variable} ${instrument.variable}`}>
+      <body className="min-h-screen font-sans">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd).replace(/</g, "\\u003c") }}
+        />
+        <noscript>
+          <style>{`.reveal{opacity:1!important;transform:none!important;filter:none!important}`}</style>
+        </noscript>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

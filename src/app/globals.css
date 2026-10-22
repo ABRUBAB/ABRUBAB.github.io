@@ -1,170 +1,369 @@
 @import "tailwindcss";
 
+/* ───────────────────────── Design tokens ─────────────────────────
+   Ink and warm ash neutrals · ultramarine "water" as the one cool colour ·
+   ember (from the AR logo) as a rare hot accent · a light ash "paper" for
+   contrast. Glass is reserved for floating UI.                          */
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+}
+
+@theme {
+  --color-ink: #09090b;
+  --color-ink-2: #101113;
+  --color-paper: #e4e3de;
+
+  --color-ash-50: #f5f4f1;
+  --color-ash-100: #e9e8e4;
+  --color-ash-200: #d3d2cd;
+  --color-ash-300: #b0afa9;
+  --color-ash-400: #8a8984;
+  --color-ash-500: #64635f;
+  --color-ash-600: #464541;
+  --color-ash-700: #2e2d2b;
+  --color-ash-800: #1d1c1b;
+  --color-ash-900: #131312;
+
+  --color-cobalt-200: #c7d5ff;
+  --color-cobalt-300: #9eb6ff;
+  --color-cobalt-400: #6f90ff;
+  --color-cobalt-500: #3d63ff;
+  --color-cobalt-600: #2547eb;
+  --color-cobalt-700: #1b35bd;
+  --color-cobalt-800: #142792;
+  --color-cobalt-900: #0c1a66;
+  --color-cobalt-950: #070f3d;
+
+  --color-ember-400: #ff8a4c;
+  --color-ember-500: #ff5a1f;
+  --color-ember-600: #e34400;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --gutter: clamp(20px, 4.2vw, 56px);
+  color-scheme: dark;
+}
+
 @layer base {
-  :root {
-    --bg-base: #0B0A0C;
-    --bg-surface: #151316;
-    --bg-surface-raised: #1C191E;
-    --bg-surface-high: #252026;
-    
-    --accent-maroon: #6E1423;
-    --accent-maroon-dark: #450B15;
-    --accent-maroon-light: #8E1C30;
-    
-    --accent-gold: #C9A227;
-    --accent-gold-light: #E5BE38;
-    --accent-gold-glow: rgba(201, 162, 39, 0.35);
-    
-    --text-primary: #EDE7DD;
-    --text-secondary: #A69C93;
-    --text-muted: #706862;
-    
-    --border-subtle: rgba(237, 231, 221, 0.08);
-    --border-maroon: rgba(110, 20, 35, 0.35);
-    --border-gold: rgba(201, 162, 39, 0.45);
+  html {
+    /* Solid ink everywhere; the water canvas paints over it in the hero only. */
+    background: var(--color-ink);
+    scroll-padding-top: 96px;
   }
 
   body {
-    background-color: var(--bg-base);
-    color: var(--text-primary);
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    selection-background-color: #6E1423;
-    selection-color: #EDE7DD;
+    /* Transparent so the fixed hero canvas (z-index -1) shows through. */
+    background: transparent;
+    color: var(--color-ash-100);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
   }
 
   ::selection {
-    background: #6E1423;
-    color: #EDE7DD;
+    background: rgb(61 99 255 / 0.5);
+    color: #fff;
   }
-}
 
-/* Blur to sharp resolving transition */
-.resolve-in {
-  animation: resolveIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes resolveIn {
-  0% {
-    filter: blur(8px);
-    opacity: 0.2;
-    transform: translateY(12px) scale(0.99);
+  :focus-visible {
+    outline: 2px solid var(--color-cobalt-400);
+    outline-offset: 3px;
   }
-  100% {
-    filter: blur(0px);
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
 
-/* Laser scan line animation */
-@keyframes laserScan {
-  0% {
-    top: 0%;
-    opacity: 0.2;
+  /* Fine film grain over everything — gives the ash its texture. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode: soft-light;
   }
-  50% {
-    opacity: 1;
+
+  /* Custom cursor is active: hide the system one (inputs keep the I-beam). */
+  html[data-cursor="on"],
+  html[data-cursor="on"] * {
+    cursor: none !important;
   }
-  100% {
-    top: 100%;
-    opacity: 0.2;
+  html[data-cursor="on"] input,
+  html[data-cursor="on"] textarea {
+    cursor: text !important;
   }
-}
 
-.animate-laserScan {
-  animation: laserScan 0.45s ease-in-out forwards;
-}
-
-@keyframes spinSlow {
-  from {
-    transform: rotate(0deg);
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-ash-700) transparent;
   }
-  to {
-    transform: rotate(360deg);
+
+  /* Lenis (smooth scroll) — recommended base styles */
+  html.lenis,
+  html.lenis body {
+    height: auto;
   }
-}
-
-.animate-spin-slow {
-  animation: spinSlow 8s linear infinite;
-}
-
-/* Subtle gold pulse for resolved nodes */
-@keyframes goldPulse {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(201, 162, 39, 0.2);
-    border-color: rgba(201, 162, 39, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 28px rgba(201, 162, 39, 0.5);
-    border-color: rgba(229, 190, 56, 0.8);
-  }
-}
-
-.gold-glow {
-  animation: goldPulse 3.5s infinite ease-in-out;
-}
-
-/* Border beam and shimmer animations for Kokonut UI and Backlit UI styling */
-@keyframes border-beam {
-  100% {
-    offset-distance: 100%;
-  }
-}
-
-.animate-border-beam {
-  animation: border-beam var(--duration) infinite linear;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(212,175,55,0.15) 50%, rgba(255,255,255,0) 100%);
-  background-size: 200% 100%;
-  animation: shimmer 3s infinite linear;
-}
-
-/* Academic paper typography */
-.font-display {
-  font-family: var(--font-fraunces), serif;
-}
-
-.font-body {
-  font-family: var(--font-inter), sans-serif;
-}
-
-/* Print styling for Reviewer Mode and CV */
-@media print {
-  body {
-    background: #ffffff !important;
-    color: #111111 !important;
-  }
-  .no-print {
-    display: none !important;
-  }
-  .print-only {
-    display: block !important;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .lenis.lenis-smooth {
     scroll-behavior: auto !important;
   }
-  .resolve-in {
-    filter: none !important;
-    opacity: 1 !important;
-    transform: none !important;
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  /* ───────────────────────── Layout ───────────────────────── */
+
+  .wrap {
+    width: min(1280px, 100% - var(--gutter) * 2);
+    margin-inline: auto;
+  }
+
+  .section {
+    position: relative;
+    padding-block: clamp(64px, 9vw, 128px);
+  }
+
+  /* A big rounded sheet inset from the viewport edge — used for the light
+     and the cobalt sections so the page reads as stacked, distinct layers. */
+  .sheet {
+    position: relative;
+    margin-inline: clamp(8px, 1.4vw, 20px);
+    border-radius: clamp(28px, 4vw, 56px);
+    overflow: clip;
+  }
+
+  /* ───────────────────────── Type ───────────────────────── */
+
+  .display {
+    font-weight: 500;
+    letter-spacing: -0.055em;
+    line-height: 0.9;
+  }
+
+  .serif-italic {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ash-400);
+  }
+
+  /* gradient with a slow sheen, for the one italic word per heading */
+  .text-ice {
+    background: linear-gradient(100deg, #ffffff 0%, var(--color-cobalt-200) 30%, var(--color-cobalt-400) 62%, var(--color-cobalt-200) 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: sheen 9s ease-in-out infinite alternate;
+  }
+
+  @keyframes sheen {
+    to {
+      background-position: 100% 0;
+    }
+  }
+
+  .outline-text {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--outline, rgb(255 255 255 / 0.14));
+  }
+
+  /* ───────────────────────── Surfaces ───────────────────────── */
+
+  /* Default dark surface: solid, hairline edge, soft pointer light. */
+  .panel {
+    position: relative;
+    isolation: isolate;
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.04), rgb(255 255 255 / 0) 42%),
+      rgb(19 19 18 / 0.96);
+    border: 1px solid rgb(255 255 255 / 0.08);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.05),
+      0 30px 70px -40px rgb(0 0 0 / 0.9);
+    transition: border-color 0.4s var(--ease-out-quint);
+  }
+  .panel:hover {
+    border-color: rgb(255 255 255 / 0.16);
+  }
+  .panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    background: radial-gradient(
+      520px circle at var(--mx, 50%) var(--my, 0%),
+      rgb(var(--spot, 111 144 255) / 0.12),
+      transparent 46%
+    );
+    opacity: var(--glow, 0);
+    transition: opacity 0.45s var(--ease-out-quint);
+    pointer-events: none;
+  }
+  .panel > * {
+    position: relative;
+    z-index: 3;
+  }
+
+  /* Glass — floating UI only (nav pill, command menu). Tinted dark so it
+     stays legible when it passes over the light sheet. */
+  .glass {
+    position: relative;
+    isolation: isolate;
+    background:
+      linear-gradient(145deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.02) 55%, rgb(255 255 255 / 0.05)),
+      rgb(12 12 14 / 0.58);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.18),
+      inset 0 -1px 0 rgb(0 0 0 / 0.35),
+      0 24px 60px -24px rgb(0 0 0 / 0.7);
+  }
+  .glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      140deg,
+      rgb(255 255 255 / 0.4),
+      rgb(255 255 255 / 0.05) 34%,
+      rgb(255 255 255 / 0.02) 62%,
+      rgb(158 182 255 / 0.4)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    pointer-events: none;
+  }
+  .glass > * {
+    position: relative;
+    z-index: 3;
+  }
+  .glass-dense {
+    background:
+      linear-gradient(145deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.015) 55%, rgb(255 255 255 / 0.035)),
+      rgb(10 10 12 / 0.78);
+  }
+
+  /* Chromium-only water refraction on the nav pill (filter lives in <LiquidDefs/>). */
+  html[data-refract] .liquid {
+    -webkit-backdrop-filter: blur(6px) saturate(170%) url(#liquid-glass);
+    backdrop-filter: blur(6px) saturate(170%) url(#liquid-glass);
+  }
+
+  /* ───────────────────────── Texture ───────────────────────── */
+
+  .bg-dots {
+    background-image: radial-gradient(rgb(255 255 255 / 0.16) 1px, transparent 1.3px);
+    background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(80% 70% at 50% 35%, #000 20%, transparent 100%);
+    mask-image: radial-gradient(80% 70% at 50% 35%, #000 20%, transparent 100%);
+  }
+
+  .bg-paper-grid {
+    background-image:
+      linear-gradient(rgb(9 9 11 / 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(9 9 11 / 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(90% 80% at 50% 30%, #000 25%, transparent 100%);
+    mask-image: radial-gradient(90% 80% at 50% 30%, #000 25%, transparent 100%);
+  }
+
+  /* ───────────────────────── Keyframes ───────────────────────── */
+
+  @keyframes float-y {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -10px, 0);
+    }
+  }
+
+  @keyframes drift {
+    0% {
+      transform: translate3d(-6%, -4%, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(5%, 6%, 0) scale(1.12);
+    }
+    100% {
+      transform: translate3d(-6%, -4%, 0) scale(1);
+    }
+  }
+  .drift {
+    animation: drift var(--drift, 22s) ease-in-out infinite;
+  }
+
+  @keyframes ping-soft {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    80%,
+    100% {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+  }
+  .ping-soft {
+    animation: ping-soft 2.4s var(--ease-out-quint) infinite;
+  }
+
+}
+
+/* ───────────────────────── Accessibility ───────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgb(17 17 18 / 0.96);
+  }
+}
+
+@media print {
+  body::after {
+    display: none;
   }
 }
